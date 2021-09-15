@@ -13,3 +13,7 @@ Books Online adalah sebuah aplikasi semacam perpustakaan online yang dibuat untu
 - User dapat menyewa buku yang diinginkan
 - Terdapat buku yang bebas akses oleh user
 - User yang penulis dapat menerbitkan bukunya dalam versi gratis, berbayar, atau untuk penyewaan.
+
+## Contributors
+
+Wahyu Nur Fadillah
