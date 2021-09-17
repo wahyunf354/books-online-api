@@ -1,6 +1,7 @@
 package main
 
 import (
+	"books_online_api/configs"
 	"net/http"
 
 	"github.com/labstack/echo/v4"
@@ -13,6 +14,8 @@ type BaseResponse struct {
 }
 
 func main() {
+	configs.InitDB()
+
 	e := echo.New()
 	ev1 := e.Group("/api/v1")
 	ev1.GET("/", func(c echo.Context) error {
