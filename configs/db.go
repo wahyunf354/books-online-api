@@ -1,6 +1,8 @@
 package configs
 
 import (
+	"books_online_api/models/users"
+
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 )
@@ -14,4 +16,9 @@ func InitDB() {
 	if err != nil {
 		panic("Connection DB Faild")
 	}
+	Migration()
+}
+
+func Migration() {
+	DB.AutoMigrate(&users.User{})
 }
