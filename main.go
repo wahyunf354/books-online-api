@@ -8,5 +8,5 @@ import (
 func main() {
 	configs.InitDB()
 	e := routes.NewRoute()
-	e.Logger.Fatal(e.Start(":8001"))
+	e.Logger.Fatal(e.Start(":8000"))
 }
