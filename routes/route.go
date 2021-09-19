@@ -9,6 +9,6 @@ import (
 func NewRoute() *echo.Echo {
 	e := echo.New()
 	ev1 := e.Group("/api/v1")
-	ev1.POST("/users/register", controllers.RegisterUser())
+	ev1.POST("/users/register", controllers.RegisterUser)
 	return e
 }

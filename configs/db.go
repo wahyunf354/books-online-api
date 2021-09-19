@@ -21,4 +21,6 @@ func InitDB() {
 
 func Migration() {
 	DB.AutoMigrate(&users.User{})
+
+	DB.Migrator().AlterColumn(&users.User{}, "Email")
 }
