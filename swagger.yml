@@ -1,0 +1,467 @@
+openapi: 3.0.0
+servers:
+  - description: Develompent
+    url: http://localhost:8000
+  - description: Production
+    url: https://
+info:
+  description: 
+    Rest API Books Online sebuah aplikasi yang<br>
+    dapat meminjami kita buku dan kita juga bisa beli buku
+  version: "1.0.0"
+  title: Books Online
+  contact:
+    email: wahyunurfadillah313@gmail.com
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+tags:
+  - name: Users
+    description: Endpoint untuk manipulasi data users
+  - name: Books
+    description: Enpoint untuk manipulasi data buku
+
+paths:
+  /v1/books:
+    get:
+      tags:
+        - Books
+      summary: mengambil semua koleksi buku
+      operationId: collectionBooks 
+      description: |
+        Koleksi buku yang diambil dapat berasal dari pihak ketiga,
+        atau berasal dari penulis.
+      parameters:
+        - in: query
+          name: category
+          description: mengambil data sesuai kategori
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: searchString
+          description: Mencari buku dengan mamasukan string nama bukunya atau nama penulis
+          required: false
+          schema:
+            type: string
+        - in: query
+          name: skip
+          description: number of records to skip for pagination
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+        - in: query
+          name: limit
+          description: maximum number of records to return
+          schema:
+            type: integer
+            format: int32
+            minimum: 0
+            maximum: 10
+      responses:
+        '200':
+          description: search results matching criteria or data books
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/BooksResponse'
+        '400':
+          description: bad input parameter
+    post: 
+      tags:
+        - Books
+      summary: Membuat buku baru dari user penulis
+      operationId: createBook
+      description: Membuat buku baru hanya dapat dilakukan oleh user yang mendaftar sebagai penulis
+      requestBody: 
+        content:
+          application/json:
+            schema:
+              type: object
+              # TODO: this
+      responses:
+        '201':
+          description: response success membuat buku baru
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBookResponse'
+
+
+  /v1/books/:id:
+    get: 
+      tags: 
+        - Books
+      summary: Mengambil satu buku dengan detail
+      operationId: getOneBook
+      responses: 
+        '200':
+          description: Mengembalikan satu buku sesuai id dengan description dan url buku
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookDetailResponse'
+  /v1/users/register:
+    post:
+      tags:
+        - Users
+      summary: Endpoint untuk membuat user baru atau register
+      description: Endpoint ini digunakan untuk mendaftarkan user baru sebagai user pembaca atau penulis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses: 
+        '201': 
+          description: Berhasil membuat user baru
+          content: 
+            application/json:
+              schema:
+                type: object
+                required:
+                  - code
+                  - message
+                  - data
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message: 
+                    type: string
+                    example: Success
+                  data: 
+                    $ref: '#/components/schemas/RegisterResponse'
+  /v1/users/login:
+    post:
+      tags:
+        - Users
+      summary: Endpoint untuk melakukan login users   
+      requestBody:
+        required: true
+        content: 
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Untuk melakukan login users
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+  /v1/users/:id:
+    get:
+      tags:
+        - Users
+      summary: Mendapatkan data detail user 
+      description: Untuk mendapatkan data detail user maka harus memberi authentication di header dengan token
+      responses:
+        '200':
+          description: Mengambalikan response body berupa data users secara lengkap
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetailResponse'              
+  /v1/users/profile:
+    post:
+      tags: 
+        - Users
+      summary: untuk upload profile user
+      operationId: uplaodProfileId
+      description: untuk melakukan upload harus mencantumkan header authentication dengan token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                userId: 
+                  type: integer
+                  example: 1
+                image: 
+                  type: string
+                  format: file
+                
+      responses:
+        '201':
+          description: response berhasil mengupload profile
+          content:
+            application/json:
+              schema: 
+                $ref: '#/components/schemas/UserProfileResponse'
+
+components:
+  schemas:
+    LoginResponse: 
+      type: object
+      required:
+        - code
+        - message
+        - data
+      properties:
+        code:
+          type: integer
+          example: 200
+        message: 
+          type: string
+          example: success
+        data:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            token:
+              type: string
+              format: token
+              example: 4yufdv2uig4u1-h4ufsdivb2ry8gfwuibv1r
+            firstname: 
+              type: string
+              example: Wahyu
+            lastname: 
+              type: string
+              example: Nur Fadillah
+            email: 
+              type: string
+              example: wahyunurfadillah313@gmail.com
+            username: 
+              type: string
+              example: wahyunf
+    LoginRequest:
+      type: object
+      properties: 
+        email: 
+          type: string
+          example: wahyunurfadillah@gmail.com
+        password:
+          type: string
+          example: 1234567
+    UserDetailResponse:
+      type: object
+      properties:
+        code: 
+          type: integer
+          example: 200
+        message: 
+          type: string
+          example: success
+        data:
+          type: object
+          properties:
+            username:
+              type: string
+            firstname:
+              type: string
+            lastname:
+              type: string
+            email:
+              type: string
+            birth: 
+              type: string
+              format: date-time
+            gender:
+              type: string
+              example: L
+            url_profile:
+              type: string
+              format: url
+              example: https://localhost:80000/image/user/1
+            role: 
+              type: string
+              example: penulis
+    RegisterResponse:
+      type: object
+      required: 
+        - username
+        - firstname
+        - lastname
+        - email
+        - role
+        - birth
+        - gender
+      properties:
+        username:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        role:
+          type: integer
+        birth: 
+          type: string
+          format: date-time
+        gender:
+          type: string
+          example: L
+    RegisterRequest:
+      type: object
+      required: 
+        - username
+        - firstname
+        - lastname
+        - email
+        - role
+        - birth
+        - gender
+        - password
+        - confpassword
+      properties:
+        username:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        role:
+          type: integer
+        birth: 
+          type: string
+          format: date-time
+        gender:
+          type: string
+          example: L
+        password: 
+          type: string
+          example: 123
+        confpassword: 
+          type: string
+          example: 123
+    UserProfileResponse:
+      type: object
+      properties: 
+        code: 
+          type: integer
+          example: 201
+        message: 
+          type: string
+          example: success
+        data: 
+          type: object
+          properties:
+            url_profile: 
+              type: string
+              example: https://localhost:80000/image/user/1
+            user_id: 
+              type: string
+              example: 1
+
+    BooksResponse: 
+      type: object
+      required: 
+        - code
+        - message
+        - data
+      properties: 
+        code:
+          type: integer
+          example: 200
+        message: 
+          type: string
+          example: Success
+        data: 
+          type: array
+          items:
+            $ref: '#/components/schemas/BookItems'
+    BookItems:
+      type: object
+      required:
+        - id
+        - title
+        - autor
+        - category
+        - type
+        - price
+      properties:
+        id:
+          type: integer
+          format: id
+          example: 1
+        title:
+          type: string
+          example: Javascript 100jam
+        autor:
+          type: string
+          example: 'Handoko'
+        category: 
+          type: string
+          example: Programming
+        type:
+          type: string
+          example: Free
+        price:
+          type: integer
+          example: 200000
+    BookDetailResponse:
+      type: object
+      required:
+        - code
+        - message
+        - data
+      properties:
+        code:
+          type: integer
+          example: 200
+        message: 
+          type: string
+          example: Success
+        data: 
+          $ref: '#/components/schemas/BookDetail'
+    BookDetail:
+      type: object
+      required:
+        - id
+        - title
+        - autor
+        - category
+        - type
+        - price
+        - description
+        - url
+      properties:
+        id:
+          type: integer
+          format: id
+          example: 1
+        title:
+          type: string
+          example: Javascript 100jam
+        autor:
+          type: string
+          example: 'Handoko'
+        category: 
+          type: string
+          example: Programming
+        type:
+          type: string
+          example: Free
+        price:
+          type: integer
+          example: 200000
+        description: 
+          type: string
+          example: Mengambil satu buku dengan detail
+        url: 
+          type: string
+          example: https://localhost:80000/image/book/1
+    CreateBookResponse:
+      type: object
+      properties: 
+        code: 
+          type: integer
+          example: 201
+        message: 
+          type: string
+          example: success
+        data:
+          type: object
+          # TODO: this
+
+        
