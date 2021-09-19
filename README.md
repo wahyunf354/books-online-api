@@ -17,3 +17,8 @@ Books Online adalah sebuah aplikasi semacam perpustakaan online yang dibuat untu
 ## Contributors
 
 Wahyu Nur Fadillah
+
+## TODO
+
+[ ] Membuat ERD Rekening User
+[ ] Membuat No Telpon Users
