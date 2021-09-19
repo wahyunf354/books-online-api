@@ -8,11 +8,11 @@ import (
 
 type User struct {
 	gorm.Model
-	FirstName string
-	LastName  string
-	Email     string `gorm:"unique"`
+	FirstName string `gorm:"not null"`
+	LastName  string `gorm:"not null"`
+	Email     string `gorm:"unique;not null"`
 	Password  string `json:"-"`
-	Role      int8
+	Role      int8   `gorm:"not null;default:1"` // 1 for reader, 2 for writer
 	Birth     time.Time
 	Gender    string
 }

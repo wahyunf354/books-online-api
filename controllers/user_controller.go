@@ -14,6 +14,7 @@ import (
 func RegisterUser(c echo.Context) error {
 	u := new(users.UserRegister)
 
+	// Melakukan Bind Data
 	if err := c.Bind(u); err != nil {
 		return c.JSON(http.StatusBadRequest, response.BaseResponse{
 			Code:    http.StatusBadRequest,
@@ -22,11 +23,11 @@ func RegisterUser(c echo.Context) error {
 		})
 	}
 
-	// validasi jika email kosong
-	if u.Email == "" {
+	// validasi jika field kosong
+	if u.Email == "" || u.FirstName == "" || u.LastName == "" || u.Role == 0 {
 		return c.JSON(http.StatusBadRequest, response.BaseResponse{
 			Code:    http.StatusBadRequest,
-			Message: "Email masih kosong",
+			Message: "Field email, first_name, last_bane, role tidak boleh kosong",
 			Data:    nil,
 		})
 	}
@@ -40,6 +41,7 @@ func RegisterUser(c echo.Context) error {
 		})
 	}
 
+	// melakukan encripi password
 	hashPassword, err := HashPassword(&u.Password)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, response.BaseResponse{
@@ -83,6 +85,7 @@ func HashPassword(password *string) (string, error) {
 	// convert password string to byte
 	passwordBytes := []byte(*password)
 
+	// hash password
 	hashedPassword, err := bcrypt.GenerateFromPassword(passwordBytes, bcrypt.MinCost)
 
 	return string(hashedPassword), err
