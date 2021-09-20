@@ -27,7 +27,7 @@ func Migration() {
 		&books.BookType{},
 		&books.Category{},
 		&books.ImageBooks{},
-		&books.BookDetails{},
+		&books.BookDetail{},
 	)
 
 	DB.Migrator().AlterColumn(&users.User{}, "Email")
