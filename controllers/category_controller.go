@@ -25,7 +25,7 @@ func CreateCategory(c echo.Context) error {
 	newCategory := books.Category{}
 	newCategory.Title = category.Title
 
-	result := configs.DB.Create(newCategory)
+	result := configs.DB.Create(&newCategory)
 
 	if result.Error != nil {
 		return c.JSON(http.StatusInternalServerError, response.BaseResponse{
