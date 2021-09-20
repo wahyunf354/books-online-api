@@ -193,6 +193,41 @@ paths:
                     example: Terjadi masalah ketika request
         '500':
           description: Respon jika terjadi masalah pada server internal
+  /v1/categories:
+    post:
+      tags:
+        - Books
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+      responses:
+        '201':
+          description: Berhasil membuat data kategori buku
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code: 
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      title: 
+                        type: string
+        '400':
+          description: Respon ketika nama kategori kosong atau request yang dikirimkan bermasalah
+        '500':
+          description: Server bermasalah
   /v1/users/register:
     post:
       tags:
