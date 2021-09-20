@@ -9,7 +9,7 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-func CreateBookTypes(c echo.Context) error {
+func CreateBookType(c echo.Context) error {
 	bookType := new(books.BookTypeRequest)
 
 	// Melakukan Bind Data

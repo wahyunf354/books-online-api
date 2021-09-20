@@ -13,7 +13,7 @@ func NewRoute() *echo.Echo {
 	ev1.POST("/users/register", controllers.RegisterUser)
 
 	// Book Type
-	ev1.POST("/booktypes", controllers.CreateBookTypes)
+	ev1.POST("/booktypes", controllers.CreateBookType)
 
 	// Category Book
 	ev1.POST("/categories", controllers.CreateCategory)
