@@ -87,8 +87,6 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateBookResponse'
-
-
   /v1/books/:id:
     get: 
       tags: 
@@ -102,6 +100,27 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookDetailResponse'
+  /v1/booktypes:
+    post:
+      tags:
+        - Books
+      summary: Membuat tipe buku
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: beli
+                unit:
+                  type: string
+                  example: selamanya
+      responses:
+        '201':
+          
+
   /v1/users/register:
     post:
       tags:
@@ -174,16 +193,16 @@ paths:
       description: untuk melakukan upload harus mencantumkan header authentication dengan token
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               properties:
                 userId: 
                   type: integer
                   example: 1
-                image: 
+                image:
                   type: string
-                  format: file
+                  format: binary
                 
       responses:
         '201':
