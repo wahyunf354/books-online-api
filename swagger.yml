@@ -119,6 +119,48 @@ paths:
                   example: selamanya
       responses:
         '201':
+          description: Berhasil memasukkan data tipe buku
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: Success create new type book
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name: 
+                        type: string
+                      unit:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+        '400':
+          description: Respon jika terjadi masalah pada request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Terjadi masalah ketika request
+        '500':
+          description: Respon jika terjadi masalah pada server internal
           
 
   /v1/users/register:
