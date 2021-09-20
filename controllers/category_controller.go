@@ -22,6 +22,15 @@ func CreateCategory(c echo.Context) error {
 		})
 	}
 
+	// Validasi title category
+	if category.Title == "" {
+		return c.JSON(http.StatusBadRequest, response.BaseResponse{
+			Code:    http.StatusBadRequest,
+			Message: "Field title tidak boleh kosong",
+			Data:    nil,
+		})
+	}
+
 	newCategory := books.Category{}
 	newCategory.Title = category.Title
 
