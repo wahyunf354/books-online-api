@@ -18,5 +18,7 @@ func NewRoute() *echo.Echo {
 	// Category Book
 	ev1.POST("/categories", controllers.CreateCategory)
 
+	// Books
+	ev1.POST("/books", controllers.CreateBook)
 	return e
 }
