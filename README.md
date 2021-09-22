@@ -22,3 +22,7 @@ Wahyu Nur Fadillah
 
 [ ] Membuat ERD Rekening User
 [ ] Membuat No Telpon Users
+
+## NOTES
+
+- Semua users dapat membuat buku, yang seharusnya hanya user dengan role penulis yang dapat membuat buku

@@ -74,8 +74,8 @@ func RegisterUser(c echo.Context) error {
 		})
 	}
 
-	return c.JSON(http.StatusOK, response.BaseResponse{
-		Code:    http.StatusOK,
+	return c.JSON(http.StatusCreated, response.BaseResponse{
+		Code:    http.StatusCreated,
 		Message: "Berhasil register user dengan id",
 		Data:    userNew,
 	})
