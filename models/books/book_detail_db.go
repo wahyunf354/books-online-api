@@ -7,5 +7,5 @@ type BookDetail struct {
 	UrlBook     string `gorm:"not null"`
 	PageCount   int
 	Description string `gorm:"not null"`
-	BookId      string `gorm:"not null;unique"`
+	BookId      uint   `gorm:"not null;unique"`
 }
