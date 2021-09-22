@@ -3,16 +3,80 @@ package controllers
 import (
 	"books_online_api/configs"
 	"books_online_api/helpers"
+	"books_online_api/middlewares"
 	"books_online_api/models/response"
 	"books_online_api/models/users"
+	"errors"
+	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/labstack/echo/v4"
+	"gorm.io/gorm"
 )
 
 func LoginUser(c echo.Context) error {
-	return nil
+	userLogin := new(users.UserLogin)
+
+	// Melakukan Bind Data
+	if err := c.Bind(userLogin); err != nil {
+		return c.JSON(http.StatusBadRequest, response.BaseResponse{
+			Code:    http.StatusBadRequest,
+			Message: "Terjadi masalah pada request",
+			Data:    err,
+		})
+	}
+
+	fmt.Println(userLogin)
+
+	user := users.User{}
+
+	result := configs.DB.Where("email = ? && password = ?", userLogin.Email, userLogin.Password).First(&user)
+
+	if result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
+			return c.JSON(http.StatusForbidden, response.BaseResponse{
+				Code:    http.StatusForbidden,
+				Message: "User tidak ditemukan atau password tidak sesuai",
+				Data:    nil,
+			})
+		} else {
+			return c.JSON(http.StatusInternalServerError, response.BaseResponse{
+				Code:    http.StatusInternalServerError,
+				Message: "Ada keselahan di server",
+				Data:    result.Error,
+			})
+		}
+	}
+
+	token, err := middlewares.CreateToken(int(user.ID))
+
+	if err != nil {
+		return c.JSON(http.StatusInternalServerError, response.BaseResponse{
+			Code:    http.StatusInternalServerError,
+			Message: "Ada keselahan di server sini",
+			Data:    err,
+		})
+	}
+
+	userResponse := users.UserResponse{
+		Id:        int(user.ID),
+		FirstName: user.FirstName,
+		LastName:  user.LastName,
+		Email:     user.Email,
+		Token:     token,
+		Gender:    user.Gender,
+		Role:      user.Role,
+		Birth:     user.Birth,
+		CreatedAt: user.CreatedAt,
+		UpdatedAt: user.UpdatedAt,
+	}
+
+	return c.JSON(http.StatusOK, response.BaseResponse{
+		Code:    http.StatusOK,
+		Message: "Berhasil Login",
+		Data:    userResponse,
+	})
 }
 
 func RegisterUser(c echo.Context) error {

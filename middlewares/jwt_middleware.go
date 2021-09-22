@@ -1,19 +1,32 @@
 package middlewares
 
 import (
-	"books_online_api/constants"
+	"fmt"
 	"time"
 
 	"github.com/golang-jwt/jwt"
 )
 
-func CreateToken(email string, firstName string, lastName string) (string, error) {
-	claims := jwt.MapClaims{}
-	claims["email"] = email
-	claims["firstName"] = firstName
-	claims["lastName"] = lastName
-	claims["exp"] = time.Now().Add(time.Hour * 1).Unix()
+type JwtClaims struct {
+	UserId int `json:"userid"`
+	jwt.StandardClaims
+}
 
+func CreateToken(id int) (string, error) {
+	claims := &JwtClaims{
+		id,
+		jwt.StandardClaims{
+			ExpiresAt: time.Now().Local().Add(time.Hour * 1).Unix(),
+		},
+	}
+	fmt.Println(claims)
 	token := jwt.NewWithClaims(jwt.SigningMethodES256, claims)
-	return token.SignedString([]byte(constants.SECRET_KEY))
+	// TODO: Masih error untuk generate JWT
+	jwtToken, err := token.SignedString([]byte("hallo"))
+
+	if err != nil {
+		return "", err
+	}
+
+	return jwtToken, nil
 }
