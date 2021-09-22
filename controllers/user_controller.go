@@ -2,14 +2,18 @@ package controllers
 
 import (
 	"books_online_api/configs"
+	"books_online_api/helpers"
 	"books_online_api/models/response"
 	"books_online_api/models/users"
 	"net/http"
 	"time"
 
 	"github.com/labstack/echo/v4"
-	"golang.org/x/crypto/bcrypt"
 )
+
+func LoginUser(c echo.Context) error {
+	return nil
+}
 
 func RegisterUser(c echo.Context) error {
 	u := new(users.UserRegister)
@@ -42,7 +46,7 @@ func RegisterUser(c echo.Context) error {
 	}
 
 	// melakukan encripi password
-	hashPassword, err := HashPassword(&u.Password)
+	hashPassword, err := helpers.HashPassword(&u.Password)
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, response.BaseResponse{
 			Code:    http.StatusInternalServerError,
@@ -79,14 +83,4 @@ func RegisterUser(c echo.Context) error {
 		Message: "Berhasil register user dengan id",
 		Data:    userNew,
 	})
-}
-
-func HashPassword(password *string) (string, error) {
-	// convert password string to byte
-	passwordBytes := []byte(*password)
-
-	// hash password
-	hashedPassword, err := bcrypt.GenerateFromPassword(passwordBytes, bcrypt.MinCost)
-
-	return string(hashedPassword), err
 }
