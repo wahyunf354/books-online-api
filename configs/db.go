@@ -1,6 +1,7 @@
 package configs
 
 import (
+	"books_online_api/models/books"
 	"books_online_api/models/users"
 
 	"gorm.io/driver/mysql"
@@ -20,7 +21,14 @@ func InitDB() {
 }
 
 func Migration() {
-	DB.AutoMigrate(&users.User{})
+	DB.AutoMigrate(
+		&users.User{},
+		&books.Book{},
+		&books.BookType{},
+		&books.Category{},
+		&books.ImageBooks{},
+		&books.BookDetail{},
+	)
 
 	DB.Migrator().AlterColumn(&users.User{}, "Email")
 }
