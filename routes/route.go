@@ -2,14 +2,17 @@ package routes
 
 import (
 	"books_online_api/controllers"
+	m "books_online_api/middlewares"
 
 	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
 )
 
 func NewRoute() *echo.Echo {
 	e := echo.New()
-	e.Pre(middleware.RemoveTrailingSlash())
+	// Middleware
+	m.RemoveSlashMiddleware(e)
+	m.LogMiddleware(e)
+
 	ev1 := e.Group("/api/v1")
 	// Users
 	ev1.POST("/users/register", controllers.RegisterUser)
