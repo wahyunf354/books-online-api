@@ -19,7 +19,7 @@ func UploadFileBook(fileBook *multipart.FileHeader) (result string, err error, m
 	// Save book
 	srcFileBooks, err := fileBook.Open()
 	if err != nil {
-		return "", err, "Internal Server Error sampai sana"
+		return "", err, "Internal Server Error"
 	}
 	defer srcFileBooks.Close()
 	fileNameBook := fileBook.Filename
@@ -34,7 +34,7 @@ func UploadFileBook(fileBook *multipart.FileHeader) (result string, err error, m
 	dstFileBook, err := os.Create("./public/files/file_books/" + newFileNameBook)
 
 	if err != nil {
-		return "", err, "Internal server error sampai sini"
+		return "", err, "Internal server error"
 	}
 	defer dstFileBook.Close()
 	if _, err := io.Copy(dstFileBook, srcFileBooks); err != nil {
@@ -101,10 +101,10 @@ func CreateBook(c echo.Context) error {
 	// MENYIMPAN BUKU
 	fileBook, err := c.FormFile("file_book")
 	if err != nil {
-		return c.JSON(http.StatusInternalServerError, response.BaseResponse{
-			Code:    http.StatusInternalServerError,
-			Message: "Internal Server Error",
-			Data:    nil,
+		return c.JSON(http.StatusBadRequest, response.BaseResponse{
+			Code:    http.StatusBadRequest,
+			Message: "empty book file",
+			Data:    err,
 		})
 	}
 	newFileBook, err, message := UploadFileBook(fileBook)
@@ -121,7 +121,7 @@ func CreateBook(c echo.Context) error {
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, response.BaseResponse{
 			Code:    http.StatusInternalServerError,
-			Message: "Internal server error",
+			Message: "Internal server error sini",
 			Data:    err,
 		})
 	}
