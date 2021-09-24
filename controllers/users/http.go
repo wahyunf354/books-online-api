@@ -21,13 +21,16 @@ func NewUserController(userUseCase users.Usecase) *UserController {
 
 func (UserController UserController) Register(c echo.Context) error {
 	userRegister := requests.UserRegister{}
-	c.Bind(&userRegister)
+	err := c.Bind(&userRegister)
+	if err != nil {
+		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
 
 	ctx := c.Request().Context()
-	user, error := UserController.UserUseCase.Register(ctx, userRegister.ToDomain())
+	user, err := UserController.UserUseCase.Register(ctx, userRegister.ToDomain())
 
-	if error != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, error)
+	if err != nil {
+		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
 	}
 
 	return controllers.NewSuccessResponse(c, http.StatusCreated, responses.FromDomain(user))

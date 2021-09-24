@@ -10,5 +10,6 @@ type ControllerList struct {
 }
 
 func (cl * ControllerList) RouteRegister(e *echo.Echo) {
-	e.POST("users/login", cl.UserController.Register)
+	ev1 := e.Group("api/v1/")
+	ev1.POST("users/register", cl.UserController.Register)
 }

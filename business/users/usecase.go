@@ -25,7 +25,7 @@ func (uc *UserUseCase) Register(ctx context.Context, user Domain) (Domain, error
 		return Domain{}, errors.New("email empty")
 	}
 
-	if helpers.IsInvalidEmail(user.Email) {
+	if !helpers.IsInvalidEmail(user.Email) {
 		return Domain{}, errors.New("email not valid")
 	}
 
