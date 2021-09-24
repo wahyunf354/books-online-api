@@ -71,18 +71,23 @@ func (uc *UserUseCase) Login(ctx context.Context, email string, password string)
 	if email == "" {
 		return Domain{}, errors.New("email empty")
 	}
-	if password == "" {
-		return Domain{}, errors.New("password empty")
-	}
 
 	if !helpers.IsInvalidEmail(email) {
 		return Domain{}, errors.New("invalid email")
 	}
 
-	user, err := uc.Repo.Login(ctx, email, password)
+	if password == "" {
+		return Domain{}, errors.New("password empty")
+	}
+
+	user, err := uc.Repo.Login(ctx, email)
 
 	if err != nil {
 		return Domain{}, err
+	}
+
+	if !helpers.ComparePassword(user.HashPassword, password) {
+		return Domain{}, errors.New("password wrong")
 	}
 
 	user.Token, err = uc.JWTConfig.GenerateTokenJWT(user.Id)
