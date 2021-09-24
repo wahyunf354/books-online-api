@@ -1,11 +1,11 @@
-package responses
+package register
 
 import (
 	"books_online_api/business/users"
 	"time"
 )
 
-type UserResponse struct {
+type UserRegister struct {
 	Id        int       `json:"id"`
 	FirstName string    `json:"first_name"`
 	Email     string    `json:"email"`
@@ -13,8 +13,8 @@ type UserResponse struct {
 	UpdatedAt time.Time `json:"updated_at"`
 }
 
-func FromDomain(domain users.Domain) UserResponse {
-	return UserResponse{
+func FromDomain(domain users.Domain) UserRegister {
+	return UserRegister{
 		Id: domain.Id,
 		FirstName: domain.FirstName,
 		Email: domain.Email,

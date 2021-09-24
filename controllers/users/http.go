@@ -4,7 +4,8 @@ import (
 	"books_online_api/business/users"
 	"books_online_api/controllers"
 	"books_online_api/controllers/users/requests"
-	"books_online_api/controllers/users/responses"
+	"books_online_api/controllers/users/responses/login"
+	"books_online_api/controllers/users/responses/register"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -19,7 +20,7 @@ func NewUserController(userUseCase users.Usecase) *UserController {
 	}
 }
 
-func (UserController UserController) Register(c echo.Context) error {
+func (userController UserController) Register(c echo.Context) error {
 	userRegister := requests.UserRegister{}
 	err := c.Bind(&userRegister)
 	if err != nil {
@@ -27,11 +28,27 @@ func (UserController UserController) Register(c echo.Context) error {
 	}
 
 	ctx := c.Request().Context()
-	user, err := UserController.UserUseCase.Register(ctx, userRegister.ToDomain())
+	user, err := userController.UserUseCase.Register(ctx, userRegister.ToDomain())
 
 	if err != nil {
 		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
 	}
 
-	return controllers.NewSuccessResponse(c, http.StatusCreated, responses.FromDomain(user))
+	return controllers.NewSuccessResponse(c, http.StatusCreated, register.FromDomain(user))
+}
+
+func (userController UserController) Login(c echo.Context) error {
+	userLogin := requests.UserLogin{}
+	err := c.Bind(&userLogin)
+	if err != nil {
+		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
+
+	ctx := c.Request().Context()
+	user, err := userController.UserUseCase.Login(ctx, userLogin.Email, userLogin.Password)
+	if err != nil {
+		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+	}
+
+	return controllers.NewSuccessResponse(c, http.StatusOK, login.FromDomain(user))
 }

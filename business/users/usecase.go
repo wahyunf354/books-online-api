@@ -1,6 +1,7 @@
 package users
 
 import (
+	"books_online_api/app/middlewares"
 	"books_online_api/helpers"
 	"context"
 	"errors"
@@ -8,12 +9,14 @@ import (
 )
 
 type UserUseCase struct {
+	JWTConfig middlewares.ConfigJwt
 	Repo           Repository
 	contextTimeout time.Duration
 }
 
-func NewUserUseCase(repo Repository, timeout time.Duration) Usecase {
+func NewUserUseCase(repo Repository, timeout time.Duration, configJWT middlewares.ConfigJwt) Usecase {
 	return &UserUseCase{
+		JWTConfig: configJWT,
 		Repo:           repo,
 		contextTimeout: timeout,
 	}
@@ -56,6 +59,33 @@ func (uc *UserUseCase) Register(ctx context.Context, user Domain) (Domain, error
 	}
 
 	user, err := uc.Repo.Register(ctx, user)
+
+	if err != nil {
+		return Domain{}, err
+	}
+
+	return user, nil
+}
+
+func (uc *UserUseCase) Login(ctx context.Context, email string, password string) (Domain, error) {
+	if email == "" {
+		return Domain{}, errors.New("email empty")
+	}
+	if password == "" {
+		return Domain{}, errors.New("password empty")
+	}
+
+	if !helpers.IsInvalidEmail(email) {
+		return Domain{}, errors.New("invalid email")
+	}
+
+	user, err := uc.Repo.Login(ctx, email, password)
+
+	if err != nil {
+		return Domain{}, err
+	}
+
+	user.Token, err = uc.JWTConfig.GenerateTokenJWT(user.Id)
 
 	if err != nil {
 		return Domain{}, err
