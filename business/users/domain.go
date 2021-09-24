@@ -28,5 +28,5 @@ type Usecase interface {
 
 type Repository interface {
 	Register(ctx context.Context, domain Domain) (Domain, error)
-	Login(ctx context.Context, email string, password string) (Domain, error)
+	Login(ctx context.Context, email string) (Domain, error)
 }
