@@ -45,7 +45,7 @@ func (userController UserController) Login(c echo.Context) error {
 	}
 
 	ctx := c.Request().Context()
-	user, err := userController.UserUseCase.Login(ctx, userLogin.Email, userLogin.Password)
+	user, err := userController.UserUseCase.Login(ctx, userLogin.ToDomain().Email, userLogin.ToDomain().Password)
 	if err != nil {
 		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
 	}

@@ -11,14 +11,14 @@ import (
 type UserUseCase struct {
 	JWTConfig middlewares.ConfigJwt
 	Repo           Repository
-	contextTimeout time.Duration
+	ContextTimeout time.Duration
 }
 
 func NewUserUseCase(repo Repository, timeout time.Duration, configJWT middlewares.ConfigJwt) Usecase {
 	return &UserUseCase{
-		JWTConfig: configJWT,
+		JWTConfig:      configJWT,
 		Repo:           repo,
-		contextTimeout: timeout,
+		ContextTimeout: timeout,
 	}
 }
 
