@@ -3,11 +3,14 @@ package main
 import (
 	"books_online_api/app/middlewares"
 	"books_online_api/app/routes"
+	_googleBooksUsecase "books_online_api/business/google_books"
 	_userUseCase "books_online_api/business/users"
+	"books_online_api/controllers/google_books"
 	_userController "books_online_api/controllers/users"
 	_userRepository "books_online_api/drivers/databases/users"
 	_userdb "books_online_api/drivers/databases/users"
 	_mysqlDriver "books_online_api/drivers/mysql"
+	_googleBooksAPIThirtPart "books_online_api/drivers/thirdparts/google_books"
 	"log"
 	"time"
 
@@ -59,9 +62,14 @@ func main() {
 	userUseCase := _userUseCase.NewUserUseCase(userRepository, timeoutContext, configJwt)
 	userController := _userController.NewUserController(userUseCase)
 
+	googleBooksThirtPart := _googleBooksAPIThirtPart.NewGoogleBooksAPIThirtPart()
+	googleBooksUsecase := _googleBooksUsecase.NewGoogleBookThirtPartUsecase(googleBooksThirtPart, timeoutContext)
+	googleBooksController := google_books.NewGoogleBooksController(googleBooksUsecase)
+
 	routesInit := routes.ControllerList{
 		JWTMiddleware: configJwt.Init(),
 		UserController: *userController,
+		GoogleBooksController: *googleBooksController,
 	}
 
 	routesInit.RouteRegister(e)
