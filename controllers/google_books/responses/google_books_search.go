@@ -3,67 +3,56 @@ package responses
 import "books_online_api/business/google_books"
 
 type GoogleBooksResponse struct {
-	Keyword string
-	Kind string
-	Id  string
-	Etag string
-	SelfLink string
+	Keyword string `json:"-"`
+	Kind string `json:"kind"`
+	Id  string `json:"id"`
+	Etag string `json:"etag"`
+	SelfLink string `json:"self_link"`
 	VolumeInfo struct {
-		Title string
-		PublishedDate int
-		Description string
-		IndustryIdentifiers []struct{
-			Type string
-			Identifier string
-		}
-		ReadingModes struct {
-			Text  bool
-			Image bool
-		}
-		PageCount int
-		PrintType string
-		Categories []string
-		ImageLinks struct {
-			SmallThumbnail string
-			Thumbnail string
-		}
-		Language string
-		PreviewLink string
-		InfoLink string
-		CanonicalVolumeLink string
-	}
-	SaleInfo struct {
-		Country string
-		Saleability string
-		IsEbook bool
-		BuyLink string
-	}
-	AccessInfo struct {
-		Country string
-		Viewability string
-		Embeddable bool
-		PublicDomain bool
-		TextToSpeechPermission string
-		Epub struct {
-			IsAvailable bool
-			DownloadLink string
-		}
-		Pdf struct {
-			IsAvailable bool
-		}
-		WebReaderLink string
-		AccessViewStatus string
-		QuoteSharingAllowed bool
-	}
-	SearchInfo struct{
-		TextSnippet string
-	}
+		Title string `json:"title"`
+		PublishedDate string `json:"published_date"`
+		Description string `json:"description"`
+		IndustryIdentifiers []interface{} `json:"industry_identifiers"`
+		ReadingModes interface {} `json:"reading_modes"`
+		PageCount int `json:"page_count"`
+		PrintType string `json:"print_type"`
+		Categories []string `json:"categories"`
+		ImageLinks interface {} `json:"image_links"`
+		Language string `json:"language"`
+		PreviewLink string `json:"preview_link"`
+		InfoLink string `json:"info_link"`
+		CanonicalVolumeLink string `json:"canonical_volume_link"`
+	} `json:"volume_info"`
+	SaleInfo interface {} `json:"sale_info"`
+	AccessInfo interface {} `json:"access_info"`
+	SearchInfo interface{} `json:"search_info"`
 }
 
 func FromDomain(gb google_books.Domain) GoogleBooksResponse {
 	return GoogleBooksResponse{
+		Keyword: gb.Keyword,
 		Kind: gb.Kind,
-		VolumeInfo: gb.VolumeInfo,
+		SelfLink: gb.SelfLink,
+		Etag: gb.Etag,
+		Id: gb.Id,
+		VolumeInfo: struct {
+			Title               string        `json:"title"`
+			PublishedDate       string        `json:"published_date"`
+			Description         string        `json:"description"`
+			IndustryIdentifiers []interface{} `json:"industry_identifiers"`
+			ReadingModes        interface{}   `json:"reading_modes"`
+			PageCount           int           `json:"page_count"`
+			PrintType           string        `json:"print_type"`
+			Categories          []string      `json:"categories"`
+			ImageLinks          interface{}   `json:"image_links"`
+			Language            string        `json:"language"`
+			PreviewLink         string        `json:"preview_link"`
+			InfoLink            string        `json:"info_link"`
+			CanonicalVolumeLink string        `json:"canonical_volume_link"`
+		}(gb.VolumeInfo),
+		SaleInfo: gb.SaleInfo,
+		AccessInfo: gb.AccessInfo,
+		SearchInfo: gb.SearchInfo,
 	}
 }
 

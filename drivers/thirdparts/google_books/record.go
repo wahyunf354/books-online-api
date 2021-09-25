@@ -1,6 +1,14 @@
 package google_books
 
-import "books_online_api/business/google_books"
+import (
+	"books_online_api/business/google_books"
+)
+
+type GoogleBooks struct {
+	Kind string
+	TotalItems int
+	Items []GoogleBook
+}
 
 type GoogleBook struct {
 	Kind string
@@ -9,60 +17,28 @@ type GoogleBook struct {
 	SelfLink string
 	VolumeInfo struct {
 		Title string
-		PublishedDate int
+		PublishedDate string
 		Description string
-		IndustryIdentifiers []struct{
-			Type string
-			Identifier string
-		}
-		ReadingModes struct {
-			Text  bool
-			Image bool
-		}
+		IndustryIdentifiers []interface{}
+		ReadingModes interface {}
 		PageCount int
 		PrintType string
 		Categories []string
-		ImageLinks struct {
-			SmallThumbnail string
-			Thumbnail string
-		}
+		ImageLinks interface {}
 		Language string
 		PreviewLink string
 		InfoLink string
 		CanonicalVolumeLink string
 	}
-	SaleInfo struct {
-		Country string
-		Saleability string
-		IsEbook bool
-		BuyLink string
-	}
-	AccessInfo struct {
-		Country string
-		Viewability string
-		Embeddable bool
-		PublicDomain bool
-		TextToSpeechPermission string
-		Epub struct {
-			IsAvailable bool
-			DownloadLink string
-		}
-		Pdf struct {
-			IsAvailable bool
-		}
-		WebReaderLink string
-		AccessViewStatus string
-		QuoteSharingAllowed bool
-	}
-	SearchInfo struct{
-		TextSnippet string
-	}
+	SaleInfo interface{}
+	AccessInfo interface{}
+	SearchInfo interface{}
 }
 
 func (gb *GoogleBook) ToDomain() google_books.Domain {
 	return  google_books.Domain{
 		Kind: gb.Kind,
-		Id: gb.Kind,
+		Id: gb.Id,
 		Etag: gb.Etag,
 		SelfLink: gb.SelfLink,
 		VolumeInfo: gb.VolumeInfo,
@@ -72,10 +48,10 @@ func (gb *GoogleBook) ToDomain() google_books.Domain {
 	}
 }
 
-func ToListDomain(listGookBooks []GoogleBook) []google_books.Domain {
+func ToListDomain(listGookBooks GoogleBooks) []google_books.Domain {
 	result := []google_books.Domain{}
 
-	for _, googleBook := range listGookBooks {
+	for _, googleBook := range listGookBooks.Items {
 		result = append(result, googleBook.ToDomain())
 	}
 
