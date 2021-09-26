@@ -30,6 +30,12 @@ func (configJWT *ConfigJwt) Init() middleware.JWTConfig {
 	}
 }
 
+func ExtractClaims(c echo.Context) (*JwtCustomClaims, error) {
+	user := c.Get("user").(*jwt.Token)
+	claims := user.Claims.(*JwtCustomClaims)
+	return claims, nil
+}
+
 func (configJWT *ConfigJwt) GenerateTokenJWT(userId int, role int8) (string, error) {
 	claims := JwtCustomClaims{
 		userId,

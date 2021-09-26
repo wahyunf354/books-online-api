@@ -6,18 +6,19 @@ import (
 	"time"
 )
 
-type BooksUseCase struct {
+type BookTypesUseCase struct {
 	Repo Repository
 	ContextTimeout time.Duration
 }
 
 func NewBooksUseCase(repo Repository, timeout time.Duration) Usecase {
-	return &BooksUseCase{
+	return &BookTypesUseCase{
 		Repo: repo,
+		ContextTimeout: timeout,
 	}
 }
 
-func (uc *BooksUseCase) CreateBookType(ctx context.Context, bookType BookTypeDomain) (BookTypeDomain, error) {
+func (uc *BookTypesUseCase) CreateBookType(ctx context.Context, bookType BookTypeDomain) (BookTypeDomain, error) {
 	if bookType.Name == "" {
 		return BookTypeDomain{}, errors.New("name book type empty")
 	}

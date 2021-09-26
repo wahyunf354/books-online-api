@@ -14,6 +14,7 @@ type BookTypeDomain struct {
 	Name string
 	Unit string
 	DeletedAt gorm.DeletedAt
+	Role int8
 }
 
 type Category struct {
