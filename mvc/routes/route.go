@@ -22,6 +22,6 @@ func NewRoute() *echo.Echo {
 	ev1.POST("/categories", controllers.CreateCategory)
 
 	// Books
-	ev1.POST("/books", controllers.CreateBook)
+	ev1.POST("/book_types", controllers.CreateBook)
 	return e
 }

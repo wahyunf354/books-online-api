@@ -90,7 +90,7 @@ func (uc *UserUseCase) Login(ctx context.Context, email string, password string)
 		return Domain{}, errors.New("password wrong")
 	}
 
-	user.Token, err = uc.JWTConfig.GenerateTokenJWT(user.Id)
+	user.Token, err = uc.JWTConfig.GenerateTokenJWT(user.Id, user.Role)
 
 	if err != nil {
 		return Domain{}, err
