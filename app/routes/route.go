@@ -20,7 +20,9 @@ func (cl * ControllerList) RouteRegister(e *echo.Echo) {
 	ev1.POST("users/register", cl.UserController.Register)
 	ev1.POST("users/login", cl.UserController.Login)
 
-	ev1.GET("books/googlebook", cl.GoogleBooksController.SearchBooks)
 
-	ev1.POST("books/booktype", cl.BookTypeController.CreateBookType)
+	withJwt := ev1.Group("books/")
+	withJwt.Use(middleware.JWTWithConfig(cl.JWTMiddleware))
+	withJwt.GET("googlebook", cl.GoogleBooksController.SearchBooks)
+	withJwt.POST("booktype", cl.BookTypeController.CreateBookType)
 }
