@@ -3,10 +3,13 @@ package main
 import (
 	"books_online_api/app/middlewares"
 	"books_online_api/app/routes"
+	_bookTypeUsecase "books_online_api/business/book_types"
 	_googleBooksUsecase "books_online_api/business/google_books"
 	_userUseCase "books_online_api/business/users"
-	"books_online_api/controllers/google_books"
+	_bookTypeController "books_online_api/controllers/book_types"
+	_googleBookController "books_online_api/controllers/google_books"
 	_userController "books_online_api/controllers/users"
+	_bookTypeDB "books_online_api/drivers/databases/book_types"
 	_userRepository "books_online_api/drivers/databases/users"
 	_userdb "books_online_api/drivers/databases/users"
 	_mysqlDriver "books_online_api/drivers/mysql"
@@ -64,12 +67,18 @@ func main() {
 
 	googleBooksThirtPart := _googleBooksAPIThirtPart.NewGoogleBooksAPIThirtPart()
 	googleBooksUsecase := _googleBooksUsecase.NewGoogleBookThirtPartUsecase(googleBooksThirtPart, timeoutContext)
-	googleBooksController := google_books.NewGoogleBooksController(googleBooksUsecase)
+	googleBooksController := _googleBookController.NewGoogleBooksController(googleBooksUsecase)
+
+	bookTypeRepository := _bookTypeDB.NewMysqlBookTypesRepository(Conn)
+	bookTypeUsecase := _bookTypeUsecase.NewBooksUseCase(bookTypeRepository,timeoutContext)
+	bookTypeController := _bookTypeController.NewBookTypesController(bookTypeUsecase)
+
 
 	routesInit := routes.ControllerList{
 		JWTMiddleware: configJwt.Init(),
 		UserController: *userController,
 		GoogleBooksController: *googleBooksController,
+		BookTypeController: *bookTypeController,
 	}
 
 	routesInit.RouteRegister(e)

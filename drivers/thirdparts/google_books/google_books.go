@@ -14,7 +14,7 @@ type ThirtPartGoogleBooks struct {
 
 func NewGoogleBooksAPIThirtPart() google_books.ThirdPartyGoogleBooks {
 	return &ThirtPartGoogleBooks{
-		LinkAPI: "https://www.googleapis.com/books/v1/volumes?startIndex=%v&maxResults=%v&orderBy=relevance&filter=free-ebooks&q=%v",
+		LinkAPI: "https://www.googleapis.com/book_types/v1/volumes?startIndex=%v&maxResults=%v&orderBy=relevance&filter=free-ebooks&q=%v",
 	}
 }
 
