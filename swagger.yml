@@ -61,7 +61,7 @@ paths:
             maximum: 10
       responses:
         '200':
-          description: search results matching criteria or data books
+          description: search results matching criteria or data book_types
           content:
             application/json:
               schema:
