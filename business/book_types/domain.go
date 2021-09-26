@@ -7,7 +7,7 @@ import (
 	"time"
 )
 
-type BookTypeDomain struct {
+type Domain struct {
 	Id int
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -17,44 +17,12 @@ type BookTypeDomain struct {
 	Role int8
 }
 
-type Category struct {
-	Id int
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Title string
-}
-
-type ImageBook struct {
-	Id int
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt time.Time
-	Url string
-	BookId int
-}
-
-type Books struct {
-	Id int
-	Title      string
-	BookTypeId int
-	CategoryId int
-	Price      int
-	UserId     int
-	BookType   *BookTypeDomain
-	Category   *Category
-	Images     []*ImageBook
-
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt gorm.DeletedAt
-}
-
 type Usecase interface {
-	CreateBookType(ctx context.Context, bookType BookTypeDomain) (BookTypeDomain, error)
+	CreateBookType(ctx context.Context, bookType Domain) (Domain, error)
 }
 
 type Repository interface {
-	CreateBookType(ctx context.Context, bookType BookTypeDomain) (BookTypeDomain, error)
+	CreateBookType(ctx context.Context, bookType Domain) (Domain, error)
 }
 
 type Controller interface {

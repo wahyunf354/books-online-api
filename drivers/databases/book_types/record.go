@@ -15,8 +15,8 @@ type BookType struct {
 	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
-func (book_type *BookType) ToDomain() book_types.BookTypeDomain {
-	return book_types.BookTypeDomain{
+func (book_type *BookType) ToDomain() book_types.Domain {
+	return book_types.Domain{
 		Id: book_type.Id,
 		Name: book_type.Name,
 		Unit: book_type.Unit,
@@ -25,7 +25,7 @@ func (book_type *BookType) ToDomain() book_types.BookTypeDomain {
 	}
 }
 
-func FromDomain(domain book_types.BookTypeDomain) BookType {
+func FromDomain(domain book_types.Domain) BookType {
 	return BookType{
 		Name: domain.Name,
 		Unit: domain.Unit,

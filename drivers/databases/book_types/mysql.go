@@ -16,14 +16,14 @@ func NewMysqlBookTypesRepository(conn *gorm.DB) book_types.Repository {
 	}
 }
 
-func (rep *MysqlBookTypesRepository) CreateBookType(ctx context.Context, bookType book_types.BookTypeDomain) (book_types.BookTypeDomain, error) {
+func (rep *MysqlBookTypesRepository) CreateBookType(ctx context.Context, bookType book_types.Domain) (book_types.Domain, error) {
 
 	newBookType := FromDomain(bookType)
 
 	result := rep.Conn.Create(&newBookType)
 
 	if result.Error != nil {
-		return book_types.BookTypeDomain{}, result.Error
+		return book_types.Domain{}, result.Error
 	}
 
 	return newBookType.ToDomain(), nil

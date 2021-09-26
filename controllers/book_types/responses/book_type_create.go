@@ -15,7 +15,7 @@ type BookTypeResponse struct {
 	DeletedAt gorm.DeletedAt `json:"deleted_at"`
 }
 
-func FromDomain(domain book_types.BookTypeDomain) BookTypeResponse {
+func FromDomain(domain book_types.Domain) BookTypeResponse {
 	return BookTypeResponse{
 		Id: domain.Id,
 		Name: domain.Name,
