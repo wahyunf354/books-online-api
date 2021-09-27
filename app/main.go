@@ -9,9 +9,10 @@ import (
 	_bookTypeController "books_online_api/controllers/book_types"
 	_googleBookController "books_online_api/controllers/google_books"
 	_userController "books_online_api/controllers/users"
-	_bookTypeDB "books_online_api/drivers/databases/book_types"
+	_bookTypeDb "books_online_api/drivers/databases/book_types"
 	_userRepository "books_online_api/drivers/databases/users"
-	_userdb "books_online_api/drivers/databases/users"
+	_userDb "books_online_api/drivers/databases/users"
+	_booksDb "books_online_api/drivers/databases/books"
 	_mysqlDriver "books_online_api/drivers/mysql"
 	_googleBooksAPIThirtPart "books_online_api/drivers/thirdparts/google_books"
 	"log"
@@ -34,7 +35,7 @@ func init() {
 }
 
 func DbMigration(db *gorm.DB) {
-	err := db.AutoMigrate(&_userdb.Users{})
+	err := db.AutoMigrate(&_userDb.Users{}, _bookTypeDb.BookType{}, _booksDb.Book{})
 	if err != nil {
 		panic(err)
 	}
@@ -69,7 +70,7 @@ func main() {
 	googleBooksUsecase := _googleBooksUsecase.NewGoogleBookThirtPartUsecase(googleBooksThirtPart, timeoutContext)
 	googleBooksController := _googleBookController.NewGoogleBooksController(googleBooksUsecase)
 
-	bookTypeRepository := _bookTypeDB.NewMysqlBookTypesRepository(Conn)
+	bookTypeRepository := _bookTypeDb.NewMysqlBookTypesRepository(Conn)
 	bookTypeUsecase := _bookTypeUsecase.NewBooksUseCase(bookTypeRepository,timeoutContext)
 	bookTypeController := _bookTypeController.NewBookTypesController(bookTypeUsecase)
 
