@@ -125,7 +125,7 @@ func CreateBook(c echo.Context) error {
 			Data:    err,
 		})
 	}
-	images := form.File["images"]
+	images := form.File["image_books"]
 	// upload file image
 	nameImagesNew, err, message := UploadImages(images)
 	if err != nil {

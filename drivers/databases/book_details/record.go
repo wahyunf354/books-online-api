@@ -39,6 +39,8 @@ func (bd *BookDetails) ToDomain(domain books.Domain) books.Domain {
 		Id: domain.Id,
 		Title: domain.Title,
 		UserId: domain.UserId,
+		FileCover: domain.FileCover,
+		UrlCover: domain.UrlCover,
 
 		CreatedAt: domain.CreatedAt,
 		UpdatedAt: domain.UpdatedAt,

@@ -8,11 +8,13 @@ import (
 
 type BookDetailsRepo struct {
 	Conn *gorm.DB
+	ImageBooksLocal books.ImageBooksLocaly
 }
 
-func NewBookDetailsRepository(conn *gorm.DB) books.DetailRepository {
+func NewBookDetailsRepository(conn *gorm.DB, imageBooksLocal books.ImageBooksLocaly) books.DetailRepository {
 	return &BookDetailsRepo{
 		Conn: conn,
+		ImageBooksLocal: imageBooksLocal,
 	}
 }
 
@@ -25,7 +27,13 @@ func (b BookDetailsRepo) CreateBook(ctx context.Context, domain books.Domain) (b
 		return books.Domain{}, resultDb.Error
 	}
 
-	return newBookDetails.ToDomain(domain), nil
+	result, err := b.ImageBooksLocal.UploadImages(ctx, newBookDetails.ToDomain(domain))
+
+	if err != nil {
+		return books.Domain{}, err
+	}
+
+	return result, nil
 }
 
 
