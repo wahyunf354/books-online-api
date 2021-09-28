@@ -18,19 +18,19 @@ func NewBooksUseCase(repo Repository, timeout time.Duration) Usecase {
 	}
 }
 
-func (uc *BookTypesUseCase) CreateBookType(ctx context.Context, bookType BookTypeDomain) (BookTypeDomain, error) {
+func (uc *BookTypesUseCase) CreateBookType(ctx context.Context, bookType Domain) (Domain, error) {
 	if bookType.Name == "" {
-		return BookTypeDomain{}, errors.New("name book type empty")
+		return Domain{}, errors.New("name book type empty")
 	}
 
 	if bookType.Unit == "" {
-		return BookTypeDomain{}, errors.New("unit book type empty")
+		return Domain{}, errors.New("unit book type empty")
 	}
 
 	bookType, err := uc.Repo.CreateBookType(ctx, bookType)
 
 	if err != nil {
-		return BookTypeDomain{}, err
+		return Domain{}, err
 	}
 
 	return bookType, nil

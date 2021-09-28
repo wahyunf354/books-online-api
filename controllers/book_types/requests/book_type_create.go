@@ -7,8 +7,8 @@ type BookTypeCreate struct {
 	Unit string `json:"unit"`
 }
 
-func (bt *BookTypeCreate) ToDomain()  book_types.BookTypeDomain {
-	return book_types.BookTypeDomain{
+func (bt *BookTypeCreate) ToDomain()  book_types.Domain {
+	return book_types.Domain{
 		Name: bt.Name,
 		Unit: bt.Unit,
 	}
