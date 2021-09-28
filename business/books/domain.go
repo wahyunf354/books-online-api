@@ -12,11 +12,13 @@ type Domain struct {
 	UserId int
 	Description string
 	UrlBook string
+	FileBook *multipart.FileHeader
 	Price int
 	BookTypeId int
-	FileBook *multipart.FileHeader
 	PageCount int
 	BookDetailId int
+	UrlCover []string
+	FileCover []*multipart.FileHeader
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
@@ -37,4 +39,12 @@ type Localy interface {
 
 type DetailRepository interface {
 	CreateBook(ctx context.Context, books Domain) (Domain, error)
+}
+
+type ImageBooksLocaly interface {
+	UploadImages(ctx context.Context, books Domain) (Domain, error)
+}
+
+type ImageBooksRepository interface {
+	UploadImages(ctx context.Context, books Domain) (Domain, error)
 }

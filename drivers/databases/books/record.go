@@ -3,6 +3,7 @@ package books
 import (
 	"books_online_api/business/books"
 	"books_online_api/drivers/databases/book_types"
+	"books_online_api/drivers/databases/image_books"
 	"gorm.io/gorm"
 	"time"
 )
@@ -16,7 +17,7 @@ type Book struct {
 	UserId     int           `gorm:"not null"`
 	BookType   *book_types.BookType     `gorm:"foreignKey:BookTypeId"`
 	//Category   *Category     `gorm:"foreignKey:CategoryId"`
-	//Images     []*ImageBooks `gorm:"foreignKey:BookId"`
+	Images     []*image_books.ImageBooks `gorm:"foreignKey:BookId"`
 	UpdatedAt time.Time
 	CreatedAt time.Time
 	DeletedAt gorm.DeletedAt
@@ -43,6 +44,8 @@ func (book  Book) ToDomain(domain books.Domain) books.Domain {
 		PageCount: domain.PageCount,
 		Description: domain.Description,
 		UrlBook: domain.UrlBook,
+		FileCover: domain.FileCover,
+		UrlCover: domain.UrlCover,
 
 		CreatedAt: book.CreatedAt,
 		UpdatedAt: book.UpdatedAt,

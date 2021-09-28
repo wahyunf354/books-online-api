@@ -37,7 +37,7 @@ func (bookController BooksController) CreateBook(c echo.Context) error {
 	if err != nil {
 		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
 	}
-
+	// TODO: RESPONSE URL FILE NYA DIBUAT FULL DENGAN HOST
 	return controllers.NewSuccessResponse(c, http.StatusOK, create_books.FromDomain(booksDomain))
 }
 

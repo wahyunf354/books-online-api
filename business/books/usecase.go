@@ -35,6 +35,10 @@ func (bookUsecase *BookUsecase) CreateBook(ctx context.Context, domain Domain) (
 		return Domain{}, errors.New("User id empty")
 	}
 
+	if len(domain.FileCover) < 1 {
+		return Domain{}, errors.New("image cover empty")
+	}
+
 	resultBook, err = bookUsecase.Loc.CreateBook(ctx, domain)
 
 	if err != nil {
