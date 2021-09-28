@@ -2,20 +2,19 @@ package book_details
 
 import (
 	"books_online_api/business/books"
-	"books_online_api/drivers/Localy/image_books_files"
 	"context"
 	"gorm.io/gorm"
 )
 
 type BookDetailsRepo struct {
 	Conn *gorm.DB
-	ImageBooksLocal image_books_files.ImageBooksLocal
+	ImageBooksLocal books.ImageBooksLocaly
 }
 
-func NewBookDetailsRepository(conn *gorm.DB, ImageBooksLocal image_books_files.ImageBooksLocal) books.DetailRepository {
+func NewBookDetailsRepository(conn *gorm.DB, imageBooksLocal books.ImageBooksLocaly) books.DetailRepository {
 	return &BookDetailsRepo{
 		Conn: conn,
-		ImageBooksLocal: ImageBooksLocal,
+		ImageBooksLocal: imageBooksLocal,
 	}
 }
 

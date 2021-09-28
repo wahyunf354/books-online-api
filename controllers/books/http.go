@@ -29,6 +29,16 @@ func (bookController BooksController) CreateBook(c echo.Context) error {
 	}
 
 	bookRequest.FileBook, err = c.FormFile("file_book")
+	if err != nil {
+		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
+
+	form, err := c.MultipartForm()
+	if err != nil {
+		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
+
+	bookRequest.ImagesBook = form.File["images"]
 
 	ctx := c.Request().Context()
 

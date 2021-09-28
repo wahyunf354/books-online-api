@@ -4,22 +4,24 @@ import (
 	"books_online_api/app/middlewares"
 	"books_online_api/app/routes"
 	_bookTypeUsecase "books_online_api/business/book_types"
+	_booksUsecase "books_online_api/business/books"
 	_googleBooksUsecase "books_online_api/business/google_books"
 	_userUseCase "books_online_api/business/users"
 	_bookTypeController "books_online_api/controllers/book_types"
+	_booksController "books_online_api/controllers/books"
 	_googleBookController "books_online_api/controllers/google_books"
 	_userController "books_online_api/controllers/users"
+	_booksLocal "books_online_api/drivers/Localy/book_files"
+	_imagesBookLocal "books_online_api/drivers/Localy/image_books_files"
 	_bookDetailDb "books_online_api/drivers/databases/book_details"
+	_bookDetailsDb "books_online_api/drivers/databases/book_details"
 	_bookTypeDb "books_online_api/drivers/databases/book_types"
 	_booksDb "books_online_api/drivers/databases/books"
+	_imagesBookDb "books_online_api/drivers/databases/image_books"
 	_userDb "books_online_api/drivers/databases/users"
 	_userRepository "books_online_api/drivers/databases/users"
 	_mysqlDriver "books_online_api/drivers/mysql"
 	_googleBooksAPIThirtPart "books_online_api/drivers/thirdparts/google_books"
-	_booksLocal "books_online_api/drivers/Localy/book_files"
-	_booksUsecase "books_online_api/business/books"
-	_booksController "books_online_api/controllers/books"
-	_bookDetailsDb "books_online_api/drivers/databases/book_details"
 	"log"
 	"time"
 
@@ -40,7 +42,7 @@ func init() {
 }
 
 func DbMigration(db *gorm.DB) {
-	err := db.AutoMigrate(&_userDb.Users{}, &_bookTypeDb.BookType{}, &_booksDb.Book{}, &_bookDetailsDb.BookDetails{})
+	err := db.AutoMigrate(&_userDb.Users{}, &_bookTypeDb.BookType{}, &_booksDb.Book{}, &_bookDetailsDb.BookDetails{}, &_imagesBookDb.ImageBooks{})
 	if err != nil {
 		panic(err)
 	}
@@ -57,7 +59,7 @@ func main() {
 	}
 
 	configJwt := middlewares.ConfigJwt{
-		SecretJwt: viper.GetString("jwt.secret"),
+		SecretJwt:       viper.GetString("jwt.secret"),
 		ExpiredDuration: viper.GetInt("jwt.expired"),
 	}
 
@@ -76,21 +78,23 @@ func main() {
 	googleBooksController := _googleBookController.NewGoogleBooksController(googleBooksUsecase)
 
 	bookTypeRepository := _bookTypeDb.NewMysqlBookTypesRepository(Conn)
-	bookTypeUsecase := _bookTypeUsecase.NewBooksUseCase(bookTypeRepository,timeoutContext)
+	bookTypeUsecase := _bookTypeUsecase.NewBooksUseCase(bookTypeRepository, timeoutContext)
 	bookTypeController := _bookTypeController.NewBookTypesController(bookTypeUsecase)
 
-	booksDetailRepository := _bookDetailDb.NewBookDetailsRepository(Conn)
+	imagesBookRepository := _imagesBookDb.NewMysqlImageBookRepository(Conn)
+	imagesBookLocal := _imagesBookLocal.NewImageBookLocal(imagesBookRepository, timeoutContext)
+	booksDetailRepository := _bookDetailDb.NewBookDetailsRepository(Conn, imagesBookLocal)
 	booksRepository := _booksDb.NewBookRepository(Conn, booksDetailRepository)
 	booksFileLocal := _booksLocal.NewBookFileLocal(booksRepository, timeoutContext)
 	booksUsecae := _booksUsecase.NewBookUsecase(booksFileLocal, timeoutContext)
 	booksController := _booksController.NewBooksController(booksUsecae)
 
 	routesInit := routes.ControllerList{
-		JWTMiddleware: configJwt.Init(),
-		UserController: *userController,
+		JWTMiddleware:         configJwt.Init(),
+		UserController:        *userController,
 		GoogleBooksController: *googleBooksController,
-		BookTypeController: *bookTypeController,
-		BooksController: *booksController,
+		BookTypeController:    *bookTypeController,
+		BooksController:       *booksController,
 	}
 
 	routesInit.RouteRegister(e)

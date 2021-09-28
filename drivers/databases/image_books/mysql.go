@@ -18,7 +18,6 @@ func (i ImageBooksRepository) UploadImages(ctx context.Context, domain books.Dom
 		if result.Error != nil {
 			return books.Domain{}, result.Error
 		}
-
 	}
 
 	return domain, nil
