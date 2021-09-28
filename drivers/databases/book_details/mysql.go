@@ -25,7 +25,7 @@ func (b BookDetailsRepo) CreateBook(ctx context.Context, domain books.Domain) (b
 		return books.Domain{}, resultDb.Error
 	}
 
-	return newBookDetails.ToDomain(), nil
+	return newBookDetails.ToDomain(domain), nil
 }
 
 

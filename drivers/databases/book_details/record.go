@@ -27,12 +27,22 @@ func FromDomain(domain books.Domain) BookDetails {
 	}
 }
 
-func (bd *BookDetails) ToDomain() books.Domain {
+func (bd *BookDetails) ToDomain(domain books.Domain) books.Domain {
 	return books.Domain{
+		BookDetailId: bd.Id,
 		UrlBook: bd.UrlBook,
 		PageCount: bd.PageCount,
 		Description: bd.Description,
-		BookTypeId: bd.Id,
+
+		BookTypeId: domain.BookTypeId,
+		Price: domain.Price,
+		Id: domain.Id,
+		Title: domain.Title,
+		UserId: domain.UserId,
+
+		CreatedAt: domain.CreatedAt,
+		UpdatedAt: domain.UpdatedAt,
+		DeletedAt: domain.DeletedAt,
 	}
 }
 

@@ -20,15 +20,16 @@ func (b BookRepository) CreateBook(ctx context.Context, domain books.Domain) (bo
 		return  books.Domain{}, resultBook.Error
 	}
 
-	resultDetail, err := b.BookDetailsRepository.CreateBook(ctx, newBook.ToDomain())
+	resultDetail, err := b.BookDetailsRepository.CreateBook(ctx, newBook.ToDomain(domain))
 	if err != nil {
 		return books.Domain{}, err
 	}
 	return resultDetail, nil
 }
 
-func NewBookRepository (conn *gorm.DB) books.Repository {
+func NewBookRepository (conn *gorm.DB, bookDetailRepo books.DetailRepository) books.Repository {
 	return &BookRepository{
 		Conn: conn,
+		BookDetailsRepository: bookDetailRepo,
 	}
 }

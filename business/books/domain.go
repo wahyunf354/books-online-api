@@ -14,7 +14,7 @@ type Domain struct {
 	UrlBook string
 	Price int
 	BookTypeId int
-	FileBook multipart.FileHeader
+	FileBook *multipart.FileHeader
 	PageCount int
 	BookDetailId int
 
