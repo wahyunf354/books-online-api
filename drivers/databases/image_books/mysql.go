@@ -12,13 +12,16 @@ type ImageBooksRepository struct {
 
 func (i ImageBooksRepository) UploadImages(ctx context.Context, domain books.Domain) (books.Domain, error) {
 	newImageBooks := FromDomain(domain)
+
 	for _, imageBook := range newImageBooks {
 		result := i.Conn.Create(&imageBook)
 		if result.Error != nil {
 			return books.Domain{}, result.Error
 		}
+
 	}
-	//	TODO: sampai sini di kembalikan domainnya
+
+	return domain, nil
 }
 
 func NewMysqlImageBookRepository(conn *gorm.DB) books.ImageBooksRepository {
