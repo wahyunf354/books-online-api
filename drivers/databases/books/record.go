@@ -5,6 +5,7 @@ import (
 	"books_online_api/drivers/databases/book_details"
 	"books_online_api/drivers/databases/book_types"
 	"books_online_api/drivers/databases/image_books"
+	"books_online_api/drivers/databases/order_details"
 	"gorm.io/gorm"
 	"time"
 )
@@ -21,9 +22,10 @@ type Book struct {
 	ImageBooks []*image_books.ImageBooks `gorm:"foreignKey:BookId"`
 
 	//Category   *Category     `gorm:"foreignKey:CategoryId"`
-	UpdatedAt time.Time
-	CreatedAt time.Time
-	DeletedAt gorm.DeletedAt
+	OrderDetails []*order_details.OrderDetails `gorm:"foreignkey:BookId;references:Id"`
+	UpdatedAt    time.Time
+	CreatedAt    time.Time
+	DeletedAt    gorm.DeletedAt
 }
 
 func FromDomain(domain books.Domain) Book {

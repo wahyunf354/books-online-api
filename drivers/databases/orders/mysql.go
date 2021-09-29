@@ -1,0 +1,36 @@
+package orders
+
+import (
+	"books_online_api/business/orders"
+	"context"
+	"gorm.io/gorm"
+)
+
+type OrdersRepository struct {
+	Conn *gorm.DB
+	RepoOrderDetail orders.OrderDetailRepository
+}
+
+func NewMysqlOrderRepository(conn *gorm.DB, repo orders.OrderDetailRepository) orders.Repository {
+	return &OrdersRepository{Conn: conn, RepoOrderDetail: repo}
+}
+
+
+func (o OrdersRepository) CreateOrder(ctx context.Context, domain orders.Domain) (orders.Domain, error) {
+	var order Orders
+
+	resultOrder := o.Conn.Create(&order)
+
+	if resultOrder.Error != nil {
+		return orders.Domain{}, resultOrder.Error
+	}
+
+	resultOrderDetail, err := o.RepoOrderDetail.CreateOrder(ctx, order.ToDomain(domain))
+
+	if err != nil {
+		return orders.Domain{}, err
+	}
+
+	return resultOrderDetail, nil
+}
+
