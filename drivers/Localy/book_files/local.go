@@ -7,6 +7,7 @@ import (
 	"errors"
 	"io"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -33,7 +34,7 @@ func (b BookFilesLocal) CreateBook(ctx context.Context, domain books.Domain) (bo
 	if !helpers.CheckItemInSlice(validExtensionFileBook, extentionFileBook) {
 		return books.Domain{}, errors.New("input file book no pdf")
 	}
-	newFileNameBook := time.Now().Format(time.RFC850) + "_" + helpers.RandomString(10) + "_" + splitFileNameBook[0] + "." + extentionFileBook
+	newFileNameBook := strconv.FormatInt(time.Now().Unix(), 10) + "_" + helpers.RandomString(10) + "." + extentionFileBook
 	dstFileBook, err := os.Create("./public/files/file_books/" + newFileNameBook)
 
 	if err != nil {

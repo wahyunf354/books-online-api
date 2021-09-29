@@ -3,8 +3,8 @@ package books
 import (
 	"books_online_api/business/books"
 	"context"
-	"fmt"
 	"gorm.io/gorm"
+	"gorm.io/gorm/clause"
 )
 
 type BookRepository struct {
@@ -12,20 +12,37 @@ type BookRepository struct {
 	BookDetailsRepository books.DetailRepository
 }
 
-func (b BookRepository) GetBooks(ctx context.Context) (books.Domain, error) {
+func NewBookRepository (conn *gorm.DB, bookDetailRepo books.DetailRepository) books.Repository {
+	return &BookRepository{
+		Conn: conn,
+		BookDetailsRepository: bookDetailRepo,
+	}
+}
 
-	fmt.Println("Hai")
-	var booksResult Book
+func (b BookRepository) GetOneBook(ctx context.Context, domain books.Domain) (books.Domain, error) {
 
-	result := b.Conn.Find(&booksResult)
+	var bookResult Book
 
-	if result.Error != nil {
-		return books.Domain{}, result.Error
+	resultDb := b.Conn.Preload(clause.Associations).First(&bookResult, domain.Id)
+
+	if resultDb.Error != nil {
+		return books.Domain{}, resultDb.Error
 	}
 
-	fmt.Println(booksResult)
+	return bookResult.ToDomain(domain), nil
+}
 
-	return books.Domain{}, nil
+func (b BookRepository) GetBooks(ctx context.Context, domain books.Domain) ([]books.Domain, error) {
+
+	var booksResult []Book
+
+	result := b.Conn.Preload(clause.Associations).Find(&booksResult)
+
+	if result.Error != nil {
+		return []books.Domain{}, result.Error
+	}
+
+	return ToListDomain(booksResult, domain), nil
 }
 
 func (b BookRepository) CreateBook(ctx context.Context, domain books.Domain) (books.Domain, error) {
@@ -44,9 +61,4 @@ func (b BookRepository) CreateBook(ctx context.Context, domain books.Domain) (bo
 	return resultDetail, nil
 }
 
-func NewBookRepository (conn *gorm.DB, bookDetailRepo books.DetailRepository) books.Repository {
-	return &BookRepository{
-		Conn: conn,
-		BookDetailsRepository: bookDetailRepo,
-	}
-}
+

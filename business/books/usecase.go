@@ -12,23 +12,39 @@ type BookUsecase struct {
 	ContextTimeout time.Duration
 }
 
-func (bookUsecase *BookUsecase) GetBooks(ctx context.Context, domain Domain) (Domain, error) {
+func NewBookUsecase (loc Localy, repo Repository,  timeout time.Duration) Usecase {
+	return &BookUsecase{
+		Loc: loc,
+		Repo: repo,
+		ContextTimeout: timeout,
+	}
+}
 
-	resultRepo,err := bookUsecase.Repo.GetBooks(ctx)
+func (b *BookUsecase) GetOneBook(ctx context.Context, domain Domain) (Domain, error) {
+	if domain.Id == 0 {
+		return Domain{}, errors.New("Id empty")
+	}
+
+	resultDomain, err := b.Repo.GetOneBook(ctx, domain)
 
 	if err != nil {
 		return Domain{}, err
 	}
 
+	return resultDomain, nil
+}
+
+func (b *BookUsecase) GetBooks(ctx context.Context, domain Domain) ([]Domain, error) {
+
+	resultRepo,err := b.Repo.GetBooks(ctx, domain)
+
+	if err != nil {
+		return []Domain{}, err
+	}
+
 	return resultRepo, nil
 }
 
-func NewBookUsecase (loc Localy, timeout time.Duration) Usecase {
-	return &BookUsecase{
-		Loc: loc,
-		ContextTimeout: timeout,
-	}
-}
 
 func (bookUsecase *BookUsecase) CreateBook(ctx context.Context, domain Domain) (Domain, error) {
 

@@ -6,9 +6,11 @@ import (
 	"books_online_api/controllers"
 	"books_online_api/controllers/books/requests"
 	"books_online_api/controllers/books/responses/create_books"
+	"books_online_api/controllers/books/responses/get_books"
 	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
+	"strconv"
 )
 
 type BooksController struct {
@@ -72,5 +74,11 @@ func (booksController BooksController) GetBooks(c echo.Context) error {
 		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
 	}
 
-	return controllers.NewSuccessResponse(c, http.StatusOK, result)
+	return controllers.NewSuccessResponse(c, http.StatusOK, get_books.FromListDomain(result))
+}
+
+func (booksController BooksController) GetOneBook(c echo.Context) error {
+	var request requests.GetOneBookRequest
+	request.Id = c.Param("id")
+
 }

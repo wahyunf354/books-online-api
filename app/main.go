@@ -91,7 +91,7 @@ func main() {
 	booksDetailRepository := _bookDetailDb.NewBookDetailsRepository(Conn, imagesBookLocal)
 	booksRepository := _booksDb.NewBookRepository(Conn, booksDetailRepository)
 	booksFileLocal := _booksLocal.NewBookFileLocal(booksRepository, timeoutContext)
-	booksUsecae := _booksUsecase.NewBookUsecase(booksFileLocal, timeoutContext)
+	booksUsecae := _booksUsecase.NewBookUsecase(booksFileLocal, booksRepository, timeoutContext)
 	booksController := _booksController.NewBooksController(booksUsecae)
 
 	routesInit := routes.ControllerList{
