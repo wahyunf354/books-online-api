@@ -7,6 +7,8 @@ import (
 )
 
 type Domain struct {
+	Keyword string
+
 	Id int
 	Title string
 	UserId int
@@ -26,11 +28,13 @@ type Domain struct {
 }
 
 type Usecase interface {
-	CreateBook(ctx context.Context, books Domain) (Domain, error)
+	CreateBook(ctx context.Context, domain Domain) (Domain, error)
+	GetBooks(ctx context.Context, domain Domain ) (Domain, error)
 }
 
 type Repository interface {
-	CreateBook(ctx context.Context, books Domain) (Domain, error)
+	CreateBook(ctx context.Context, domain Domain) (Domain, error)
+	GetBooks(ctx context.Context) (Domain, error)
 }
 
 type Localy interface {

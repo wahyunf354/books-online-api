@@ -42,7 +42,12 @@ func init() {
 }
 
 func DbMigration(db *gorm.DB) {
-	err := db.AutoMigrate(&_userDb.Users{}, &_bookTypeDb.BookType{}, &_booksDb.Book{}, &_bookDetailsDb.BookDetails{}, &_imagesBookDb.ImageBooks{})
+	err := db.AutoMigrate(
+		&_userDb.Users{},
+		&_bookTypeDb.BookType{},
+		&_booksDb.Book{},
+		&_bookDetailsDb.BookDetails{},
+		&_imagesBookDb.ImageBooks{})
 	if err != nil {
 		panic(err)
 	}

@@ -8,7 +8,19 @@ import (
 
 type BookUsecase struct {
 	Loc Localy
+	Repo Repository
 	ContextTimeout time.Duration
+}
+
+func (bookUsecase *BookUsecase) GetBooks(ctx context.Context, domain Domain) (Domain, error) {
+
+	resultRepo,err := bookUsecase.Repo.GetBooks(ctx)
+
+	if err != nil {
+		return Domain{}, err
+	}
+
+	return resultRepo, nil
 }
 
 func NewBookUsecase (loc Localy, timeout time.Duration) Usecase {
