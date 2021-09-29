@@ -18,6 +18,8 @@ import (
 	_bookTypeDb "books_online_api/drivers/databases/book_types"
 	_booksDb "books_online_api/drivers/databases/books"
 	_imagesBookDb "books_online_api/drivers/databases/image_books"
+	_orderDetailsDb "books_online_api/drivers/databases/order_details"
+	_ordersDb "books_online_api/drivers/databases/orders"
 	_userDb "books_online_api/drivers/databases/users"
 	_userRepository "books_online_api/drivers/databases/users"
 	_mysqlDriver "books_online_api/drivers/mysql"
@@ -47,7 +49,9 @@ func DbMigration(db *gorm.DB) {
 		&_bookTypeDb.BookType{},
 		&_booksDb.Book{},
 		&_bookDetailsDb.BookDetails{},
-		&_imagesBookDb.ImageBooks{})
+		&_imagesBookDb.ImageBooks{},
+		&_ordersDb.Orders{},
+		&_orderDetailsDb.OrderDetails{})
 	if err != nil {
 		panic(err)
 	}
