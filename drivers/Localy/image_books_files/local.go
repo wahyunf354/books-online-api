@@ -7,6 +7,7 @@ import (
 	"io"
 	"mime/multipart"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -51,7 +52,7 @@ func UploadImages(images []*multipart.FileHeader) ([]string, error, string) {
 		if !helpers.CheckItemInSlice(validExtensionImage, extention) {
 			return result, nil, "No input image"
 		}
-		newFileName := time.Now().Format(time.RFC850) + "_" + helpers.RandomString(10) + "_" + splitFileName[0] + "." + extention
+		newFileName := strconv.FormatInt(time.Now().Unix(), 10) + "_" + helpers.RandomString(10) + "." + extention
 
 		dst, err := os.Create("./public/img/img_books/" + newFileName)
 		if err != nil {

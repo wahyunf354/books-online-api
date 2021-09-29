@@ -6,18 +6,18 @@ import (
 )
 
 type BookResponse struct {
-	Id int `json:"id"`
-	Title string `json:"title"`
-	UserId int `json:"user_id"`
-	Description string `json:"description"`
-	UrlBook string `json:"url_book"`
-	Price int `json:"price"`
-	BookTypeId int `json:"book_type_id"`
-	PageCount int `json:"page_count"`
-	BookDetailId int `json:"book_detail_id"`
+	Id           int    `json:"id"`
+	Title        string `json:"title"`
+	UserId       int    `json:"user_id"`
+	Description  string `json:"description"`
+	UrlBook      string `json:"url_book"`
+	Price        int    `json:"price"`
+	BookTypeId   int    `json:"book_type_id"`
+	PageCount    int    `json:"page_count"`
+	BookDetailId int    `json:"book_detail_id"`
 
-	CreatedAt time.Time `json:"created_at"`
-	UpdatedAt time.Time `json:"updated_at"`
+	CreatedAt time.Time   `json:"created_at"`
+	UpdatedAt time.Time   `json:"updated_at"`
 	DeletedAt interface{} `json:"deleted_at"`
 }
 

@@ -28,5 +28,7 @@ func (cl * ControllerList) RouteRegister(e *echo.Echo) {
 	withJwt.Use(middleware.JWTWithConfig(cl.JWTMiddleware))
 	withJwt.GET("/googlebook", cl.GoogleBooksController.SearchBooks)
 	withJwt.POST("/booktype", cl.BookTypeController.CreateBookType)
-	withJwt.POST("/", cl.BooksController.CreateBook)
+	withJwt.POST("", cl.BooksController.CreateBook)
+	withJwt.GET("", cl.BooksController.GetBooks)
+	withJwt.GET("/:id", cl.BooksController.GetOneBook)
 }
