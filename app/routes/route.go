@@ -2,6 +2,7 @@ package routes
 
 import (
 	"books_online_api/controllers/book_types"
+	"books_online_api/controllers/books"
 	"books_online_api/controllers/google_books"
 	"books_online_api/controllers/users"
 	"github.com/labstack/echo/v4"
@@ -13,7 +14,9 @@ type ControllerList struct {
 	UserController users.UserController
 	GoogleBooksController google_books.GoogleBooksController
 	BookTypeController book_types.BookTypesController
+	BooksController books.BooksController
 }
+
 
 func (cl * ControllerList) RouteRegister(e *echo.Echo) {
 	ev1 := e.Group("api/v1/")
@@ -21,8 +24,11 @@ func (cl * ControllerList) RouteRegister(e *echo.Echo) {
 	ev1.POST("users/login", cl.UserController.Login)
 
 
-	withJwt := ev1.Group("books/")
+	withJwt := ev1.Group("books")
 	withJwt.Use(middleware.JWTWithConfig(cl.JWTMiddleware))
-	withJwt.GET("googlebook", cl.GoogleBooksController.SearchBooks)
-	withJwt.POST("booktype", cl.BookTypeController.CreateBookType)
+	withJwt.GET("/googlebook", cl.GoogleBooksController.SearchBooks)
+	withJwt.POST("/booktype", cl.BookTypeController.CreateBookType)
+	withJwt.POST("", cl.BooksController.CreateBook)
+	withJwt.GET("", cl.BooksController.GetBooks)
+	withJwt.GET("/:id", cl.BooksController.GetOneBook)
 }
