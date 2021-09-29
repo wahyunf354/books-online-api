@@ -30,4 +30,5 @@ func (cl * ControllerList) RouteRegister(e *echo.Echo) {
 	withJwt.POST("/booktype", cl.BookTypeController.CreateBookType)
 	withJwt.POST("", cl.BooksController.CreateBook)
 	withJwt.GET("", cl.BooksController.GetBooks)
+	withJwt.GET("/:id", cl.BooksController.GetOneBook)
 }

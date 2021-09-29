@@ -7,6 +7,7 @@ import (
 	"books_online_api/controllers/books/requests"
 	"books_online_api/controllers/books/responses/create_books"
 	"books_online_api/controllers/books/responses/get_books"
+	"books_online_api/controllers/books/responses/get_one_book"
 	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
@@ -77,8 +78,17 @@ func (booksController BooksController) GetBooks(c echo.Context) error {
 	return controllers.NewSuccessResponse(c, http.StatusOK, get_books.FromListDomain(result))
 }
 
-func (booksController BooksController) GetOneBook(c echo.Context) error {
+func (booksController BooksController) GetOneBook(c echo.Context)  error {
 	var request requests.GetOneBookRequest
-	request.Id = c.Param("id")
+	request.Id, _ = strconv.Atoi(c.Param("id"))
 
+	ctx := c.Request().Context()
+
+	book, err := booksController.BooksUsecase.GetOneBook(ctx, request.ToDomain())
+
+	if err != nil {
+		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+	}
+
+	return controllers.NewSuccessResponse(c, http.StatusOK, get_one_book.FromDomain(book))
 }
