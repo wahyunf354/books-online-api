@@ -6,10 +6,12 @@ import (
 	_bookTypeUsecase "books_online_api/business/book_types"
 	_booksUsecase "books_online_api/business/books"
 	_googleBooksUsecase "books_online_api/business/google_books"
+	_ordersUsecase "books_online_api/business/orders"
 	_userUseCase "books_online_api/business/users"
 	_bookTypeController "books_online_api/controllers/book_types"
 	_booksController "books_online_api/controllers/books"
 	_googleBookController "books_online_api/controllers/google_books"
+	_orderController "books_online_api/controllers/orders"
 	_userController "books_online_api/controllers/users"
 	_booksLocal "books_online_api/drivers/Localy/book_files"
 	_imagesBookLocal "books_online_api/drivers/Localy/image_books_files"
@@ -98,12 +100,18 @@ func main() {
 	booksUsecae := _booksUsecase.NewBookUsecase(booksFileLocal, booksRepository, timeoutContext)
 	booksController := _booksController.NewBooksController(booksUsecae)
 
+	orderDetailsRepository := _orderDetailsDb.NewMysqlOrderDetailsRepository(Conn)
+	ordersRepository := _ordersDb.NewMysqlOrderRepository(Conn, orderDetailsRepository)
+	ordersUsecase := _ordersUsecase.NewOrderUsecase(ordersRepository,orderDetailsRepository, timeoutContext)
+	ordersController := _orderController.NewOrdersController(ordersUsecase)
+
 	routesInit := routes.ControllerList{
 		JWTMiddleware:         configJwt.Init(),
 		UserController:        *userController,
 		GoogleBooksController: *googleBooksController,
 		BookTypeController:    *bookTypeController,
 		BooksController:       *booksController,
+		OrdersController:      *ordersController,
 	}
 
 	routesInit.RouteRegister(e)

@@ -10,7 +10,7 @@ type OrderDetailRepository struct {
 	Conn *gorm.DB
 }
 
-func NewMysqlOrderRepository(conn *gorm.DB) orders.OrderDetailRepository {
+func NewMysqlOrderDetailsRepository(conn *gorm.DB) orders.OrderDetailRepository {
 	return &OrderDetailRepository{Conn: conn}
 }
 

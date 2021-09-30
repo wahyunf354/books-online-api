@@ -6,16 +6,18 @@ import (
 )
 
 type Domain struct {
-	Id int
+	Id     int
 	UserId int
 	BookId int
-	Qty int
+	Qty    int
 
 	TotalPrice int
-	Price int
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt interface{}
+	Price      int
+
+	StatusOrder string
+	CreatedAt   time.Time
+	UpdatedAt   time.Time
+	DeletedAt   interface{}
 }
 
 type Usecase interface {
@@ -24,6 +26,7 @@ type Usecase interface {
 
 type Repository interface {
 	CreateOrder(ctx context.Context, domain Domain) (Domain, error)
+	CheckOrderPanding(ctx context.Context, domain Domain) (Domain, error)
 }
 
 type OrderDetailRepository interface {
