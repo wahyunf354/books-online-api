@@ -35,13 +35,13 @@ func (o OrdersRepository) CreateOrder(ctx context.Context, domain orders.Domain)
 		return orders.Domain{}, err
 	}
 
-	// TODO: Update Total Price
+	// TODO: Update Total Price buat function update total price terus letak disini dan di usecase
 	resultUpdateTotalPrice := o.Conn.First(&order, resultOrderDetail.Id)
 
 	if resultUpdateTotalPrice.Error != nil {
 		return orders.Domain{}, resultUpdateTotalPrice.Error
 	}
-	order.TotalPrice += domain.Price
+	order.TotalPrice = order.TotalPrice + resultOrderDetail.Price
 
 	resultOrderSave := o.Conn.Save(&order)
 
