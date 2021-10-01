@@ -3,10 +3,10 @@ on:
   push:
     branches:
       - 'master'
+      - 'ci'
   pull_request:
     branches:
       - 'master'
-      - 'ci'
 
 jobs:
 #  job 1: unit test
