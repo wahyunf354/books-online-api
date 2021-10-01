@@ -26,6 +26,7 @@ func (o Orders) ToDomain(domain orders.Domain) orders.Domain {
 		UserId:      o.UserId,
 		BookId:      domain.BookId,
 		Qty:         domain.Qty,
+		Price: 		 domain.Price,
 		TotalPrice:  o.TotalPrice,
 		StatusOrder: o.Status,
 		CreatedAt:   o.CreatedAt,

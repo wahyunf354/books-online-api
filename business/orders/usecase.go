@@ -25,7 +25,7 @@ func (o OrderUsecase) CreateOrder(ctx context.Context, domain Domain) (Domain, e
 		return Domain{}, nil
 	}
 
-	resultOrder, err := o.Repo.CheckOrderPanding(ctx, domain)
+	resultOrder, err := o.Repo.CheckOrderPending(ctx, domain)
 
 	if err != nil {
 		order, err := o.Repo.CreateOrder(ctx, domain)

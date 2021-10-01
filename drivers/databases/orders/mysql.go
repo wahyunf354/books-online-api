@@ -35,10 +35,26 @@ func (o OrdersRepository) CreateOrder(ctx context.Context, domain orders.Domain)
 		return orders.Domain{}, err
 	}
 
+	// TODO: Update Total Price
+	resultUpdateTotalPrice := o.Conn.First(&order, resultOrderDetail.Id)
+
+	if resultUpdateTotalPrice.Error != nil {
+		return orders.Domain{}, resultUpdateTotalPrice.Error
+	}
+	order.TotalPrice += domain.Price
+
+	resultOrderSave := o.Conn.Save(&order)
+
+	if resultOrderSave.Error != nil {
+		return orders.Domain{}, resultOrderSave.Error
+	}
+
+	resultOrderDetail.TotalPrice = order.TotalPrice
+
 	return resultOrderDetail, nil
 }
 
-func (o OrdersRepository) CheckOrderPanding(ctx context.Context, domain orders.Domain) (orders.Domain, error) {
+func (o OrdersRepository) CheckOrderPending(ctx context.Context, domain orders.Domain) (orders.Domain, error) {
 
 	var order Orders
 

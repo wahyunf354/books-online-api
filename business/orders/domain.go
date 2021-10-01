@@ -26,9 +26,10 @@ type Usecase interface {
 
 type Repository interface {
 	CreateOrder(ctx context.Context, domain Domain) (Domain, error)
-	CheckOrderPanding(ctx context.Context, domain Domain) (Domain, error)
+	CheckOrderPending(ctx context.Context, domain Domain) (Domain, error)
 }
 
 type OrderDetailRepository interface {
 	CreateOrder(ctx context.Context, domain Domain) (Domain, error)
+	UpdateTotalPrice(ctx context.Context, domain Domain) (Domain, error)
 }

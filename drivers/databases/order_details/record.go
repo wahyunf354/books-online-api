@@ -23,10 +23,19 @@ func (o OrderDetails) ToDomain(domain orders.Domain) orders.Domain {
 		UserId:     domain.UserId,
 		BookId:     o.BookId,
 		Qty:        o.Qty,
-		TotalPrice: domain.TotalPrice + o.Price,
+		TotalPrice: domain.TotalPrice,
 		Price:      o.Price,
 		CreatedAt:  o.CreatedAt,
 		UpdatedAt:  o.UpdatedAt,
 		DeletedAt:  o.DeletedAt,
+	}
+}
+
+func FromDomain(domain orders.Domain) OrderDetails {
+	return OrderDetails{
+		OrderId:   domain.Id,
+		BookId:    domain.BookId,
+		Price:     domain.Price,
+		Qty:       domain.Qty,
 	}
 }
