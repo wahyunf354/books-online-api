@@ -1,16 +1,16 @@
-name: "unit test golang"
+name: unit test golang
 on:
   push:
     branches:
-      - "master"
+      - 'master'
   pull_request:
     branches:
-      - "master"
+      - 'master'
 
 jobs:
 #  job 1: unit test
   unit-test:
-    name: "do unit test to project go"
+    name: do unit test to project go
     runs-on: ubuntu-latest
     steps:
       - name: setup github action (CI)
