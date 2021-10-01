@@ -1,17 +1,18 @@
-FROM golang:1.17-alpine
+#stage 1
+FROM golang:1.16-alpine AS builder
+RUN mkdir /app
+ADD . /app
 
 WORKDIR /app
+RUN go clean --modcache
+RUN go build -o main
 
-COPY go.mod ./
-COPY go.sum ./
-
-RUN go mod download
-
-COPY *.go ./
-
-RUN go build -o /docker-gs-ping
-
+#stage 2
+FROM alpine:3.14
+WORKDIR /root/
+COPY --from=builder /app/app/config.json .
+COPY --from=builder /app/main .
 EXPOSE 8080
 
-CMD ["/main"]
+CMD ["./main"]
 
