@@ -56,11 +56,11 @@ func DbMigration(db *gorm.DB) {
 func main() {
 	// init connection database
 	configDB := _mysqlDriver.ConfigDB{
-		DB_Username: viper.GetString(`database.user`),
-		DB_Password: viper.GetString(`database.pass`),
-		DB_Host:     viper.GetString(`database.host`),
-		DB_Port:     viper.GetString(`database.port`),
-		DB_Database: viper.GetString(`database.name`),
+		DB_Username: viper.GetString(`database.prod.user`),
+		DB_Password: viper.GetString(`database.prod.pass`),
+		DB_Host:     viper.GetString(`database.prod.host`),
+		DB_Port:     viper.GetString(`database.prod.port`),
+		DB_Database: viper.GetString(`database.prod.name`),
 	}
 
 	configJwt := middlewares.ConfigJwt{
