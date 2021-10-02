@@ -37,11 +37,18 @@ func (o OrderUsecase) CreateOrder(ctx context.Context, domain Domain) (Domain, e
 
 	orderDetail, err := o.RepoDetails.CreateOrder(ctx, resultOrder)
 
+
 	if err != nil {
 		return Domain{}, err
 	}
 
-	return orderDetail, nil
+	result, err := o.Repo.UpdateTotalPrice(ctx, orderDetail)
+
+	if err != nil {
+		return Domain{}, err
+	}
+
+	return result, nil
 }
 
 

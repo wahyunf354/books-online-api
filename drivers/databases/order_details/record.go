@@ -7,9 +7,9 @@ import (
 
 type OrderDetails struct {
 	Id        int              `gorm:"primaryKey"`
-	OrderId   int              `gorm:"not null"`
+	OrderId   int              `gorm:"not null;index:orderid_bookid,unique"`
+	BookId    int              `gorm:"not null;index:orderid_bookid,unique"`
 	//Order     _ordersDb.Orders `gorm:"foreignKey:OrderId"`
-	BookId    int              `gorm:"not null"`
 	Price     int              `gorm:"not null"`
 	Qty       int              `gorm:"not null"`
 	CreatedAt time.Time
