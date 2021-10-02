@@ -37,5 +37,5 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USENAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: push docker hub
-        run: docker push wahyunf354/books_online:1.0.1
+        run: docker push wahyunf354/books_online:1.0.0
 
