@@ -3,6 +3,8 @@ package books
 import (
 	"books_online_api/business/books"
 	"books_online_api/drivers/databases/book_details"
+	//"books_online_api/drivers/databases/order_details"
+
 	"books_online_api/drivers/databases/book_types"
 	"books_online_api/drivers/databases/image_books"
 	"gorm.io/gorm"
@@ -16,14 +18,15 @@ type Book struct {
 	CategoryId int
 	Price      int                       `gorm:"not null"`
 	UserId     int                       `gorm:"not null"`
-	BookType   *book_types.BookType      `gorm:"foreignkey:BookTypeId"`
-	BookDetail *book_details.BookDetails `gorm:"foreignkey:BookId;references:Id"`
+	BookType   *book_types.BookType      `gorm:"foreignKey:BookTypeId"`
+	BookDetail *book_details.BookDetails `gorm:"foreignKey:BookId;references:Id"`
 	ImageBooks []*image_books.ImageBooks `gorm:"foreignKey:BookId"`
 
 	//Category   *Category     `gorm:"foreignKey:CategoryId"`
-	UpdatedAt time.Time
-	CreatedAt time.Time
-	DeletedAt gorm.DeletedAt
+	//OrderDetails []*order_details.OrderDetails `gorm:"foreignKey:BookId;references:Id"`
+	UpdatedAt    time.Time
+	CreatedAt    time.Time
+	DeletedAt    gorm.DeletedAt
 }
 
 func FromDomain(domain books.Domain) Book {

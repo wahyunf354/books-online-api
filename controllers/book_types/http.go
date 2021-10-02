@@ -25,6 +25,10 @@ func (bookTypesController BookTypesController) CreateBookType(c echo.Context) er
 	bookTypeRequest := requests.BookTypeCreate{}
 	err := c.Bind(&bookTypeRequest)
 
+	if err != nil {
+		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+	}
+
 	cliams, err := middlewares.ExtractClaims(c)
 	if cliams.Role != 3 {
 		return controllers.NewErrorResponse(c, http.StatusForbidden, errors.New("forbidden user"))
