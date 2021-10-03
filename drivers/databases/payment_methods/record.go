@@ -2,6 +2,7 @@ package payment_methods
 
 import (
 	"books_online_api/business/payment_methods"
+	"books_online_api/drivers/databases/transactions"
 	"gorm.io/gorm"
 	"time"
 )
@@ -12,6 +13,8 @@ type PaymentMethod struct {
 	Fee     int
 	Address string `gorm:"not null"`
 	Author  string `gorm:"not null"`
+
+	Transactions []*transactions.Transactions `gorm:"foreignKey:PaymentMethodId"`
 
 	CreatedAt time.Time
 	UpdatedAt time.Time
