@@ -1,4 +1,4 @@
-package create_payment_method
+package create_payment_methods_requests
 
 import (
 	"books_online_api/business/payment_methods"

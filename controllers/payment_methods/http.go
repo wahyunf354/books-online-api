@@ -4,7 +4,7 @@ import (
 	"books_online_api/app/middlewares"
 	"books_online_api/business/payment_methods"
 	"books_online_api/controllers"
-	"books_online_api/controllers/payment_methods/requests/create_payment_method"
+	"books_online_api/controllers/payment_methods/requests/create_payment_methods_requests"
 	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
@@ -30,7 +30,7 @@ func (p PaymentMethodsController) CreatePaymentMethods(c echo.Context) error {
 		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
 	}
 
-	var request create_payment_method.CreatePaymentMethodRequest
+	var request create_payment_methods_requests.CreatePaymentMethodRequest
 
 	err = c.Bind(&request)
 
@@ -47,5 +47,5 @@ func (p PaymentMethodsController) CreatePaymentMethods(c echo.Context) error {
 		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
 	}
 
-	return controllers.NewSuccessResponse(c, http.StatusOK, paymentMethod)
+	return controllers.NewSuccessResponse(c, http.StatusOK, create_payment_methods_requests.FromDomain(paymentMethod))
 }
