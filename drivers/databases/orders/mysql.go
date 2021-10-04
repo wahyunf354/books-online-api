@@ -11,6 +11,7 @@ type OrdersRepository struct {
 	RepoOrderDetail orders.OrderDetailRepository
 }
 
+
 func NewMysqlOrderRepository(conn *gorm.DB, repo orders.OrderDetailRepository) orders.Repository {
 	return &OrdersRepository{Conn: conn, RepoOrderDetail: repo}
 }
@@ -73,4 +74,17 @@ func (o OrdersRepository) CheckOrderPending(ctx context.Context, domain orders.D
 		return orders.Domain{}, resultDb.Error
 	}
 	return order.ToDomain(domain), nil
+}
+
+
+func (o OrdersRepository) GetOneOrder(ctx context.Context, domain orders.Domain) (orders.Domain, error) {
+	var ordersResult Orders
+
+	result := o.Conn.First(&ordersResult, domain.Id)
+
+	if result.Error != nil {
+		return orders.Domain{}, result.Error
+	}
+
+	return ordersResult.ToDomain(domain), nil
 }

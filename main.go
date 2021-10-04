@@ -7,11 +7,15 @@ import (
 	_booksUsecase "books_online_api/business/books"
 	_googleBooksUsecase "books_online_api/business/google_books"
 	_ordersUsecase "books_online_api/business/orders"
+	_paymentMethodUsecase "books_online_api/business/payment_methods"
+	_transactionsUsecase "books_online_api/business/transactions"
 	_userUseCase "books_online_api/business/users"
 	_bookTypeController "books_online_api/controllers/book_types"
 	_booksController "books_online_api/controllers/books"
 	_googleBookController "books_online_api/controllers/google_books"
 	_orderController "books_online_api/controllers/orders"
+	_paymentMethodController "books_online_api/controllers/payment_methods"
+	_transactionsController "books_online_api/controllers/transactions"
 	_userController "books_online_api/controllers/users"
 	_bookDetailDb "books_online_api/drivers/databases/book_details"
 	_bookDetailsDb "books_online_api/drivers/databases/book_details"
@@ -20,6 +24,8 @@ import (
 	_imagesBookDb "books_online_api/drivers/databases/image_books"
 	_orderDetailsDb "books_online_api/drivers/databases/order_details"
 	_ordersDb "books_online_api/drivers/databases/orders"
+	_paymentMethodsDb "books_online_api/drivers/databases/payment_methods"
+	_transactionsDB "books_online_api/drivers/databases/transactions"
 	_userDb "books_online_api/drivers/databases/users"
 	_userRepository "books_online_api/drivers/databases/users"
 	_booksLocal "books_online_api/drivers/localy/book_files"
@@ -54,7 +60,9 @@ func DbMigration(db *gorm.DB) {
 		&_bookDetailsDb.BookDetails{},
 		&_imagesBookDb.ImageBooks{},
 		&_ordersDb.Orders{},
-		&_orderDetailsDb.OrderDetails{})
+		&_orderDetailsDb.OrderDetails{},
+		&_paymentMethodsDb.PaymentMethod{},
+		&_transactionsDB.Transactions{})
 
 	if err != nil {
 		panic(err)
@@ -107,6 +115,14 @@ func main() {
 	ordersUsecase := _ordersUsecase.NewOrderUsecase(ordersRepository,orderDetailsRepository, timeoutContext)
 	ordersController := _orderController.NewOrdersController(ordersUsecase)
 
+	paymentMethodRepository := _paymentMethodsDb.NewMysqlPaymentMethodsRepository(Conn)
+	paymentMethodUsecase := _paymentMethodUsecase.NewPaymentMethodUsecase(paymentMethodRepository)
+	paymentMethodController := _paymentMethodController.NewPaymentMethodsController(paymentMethodUsecase)
+
+	transactionsRepository := _transactionsDB.NewTransactionsRepository(Conn, paymentMethodRepository, ordersRepository)
+	transactionUsecase := _transactionsUsecase.NewTransactionUsecase(transactionsRepository)
+	transactionController := _transactionsController.NewTransactionsControllers(transactionUsecase)
+
 	routesInit := routes.ControllerList{
 		JWTMiddleware:         configJwt.Init(),
 		UserController:        *userController,
@@ -114,6 +130,8 @@ func main() {
 		BookTypeController:    *bookTypeController,
 		BooksController:       *booksController,
 		OrdersController:      *ordersController,
+		PaymentMethodsController: *paymentMethodController,
+		TransactionsController: *transactionController,
 	}
 
 	routesInit.RouteRegister(e)

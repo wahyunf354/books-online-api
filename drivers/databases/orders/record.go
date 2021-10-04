@@ -3,6 +3,7 @@ package orders
 import (
 	"books_online_api/business/orders"
 	"books_online_api/drivers/databases/order_details"
+	"books_online_api/drivers/databases/transactions"
 	"gorm.io/gorm"
 	"time"
 )
@@ -14,7 +15,10 @@ type Orders struct {
 	Status     string
 
 	OrderDetails []*order_details.OrderDetails `gorm:"foreignKey:OrderId;references:Id"`
+	Transactions []*transactions.Transactions `gorm:"foreignKey:OrderId;references:Id"`
 	//User         *users.Users                   `gorm:"foreignKey:UserId"`
+
+
 	CreatedAt time.Time
 	UpdatedAt time.Time
 	DeletedAt gorm.DeletedAt
