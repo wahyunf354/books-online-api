@@ -16,19 +16,16 @@ func NewTransactionUsecase(repo Repository) Usecase {
 }
 
 func (t TransactionsUsecase) CreateTransactions(ctx context.Context, domain Domain) (Domain, error) {
-	if domain.UserId != 0 {
+	if domain.UserId == 0 {
 		return Domain{}, errors.New("noting user")
 	}
 
-	if domain.OrderId != 0 {
+	if domain.OrderId == 0 {
 		return Domain{}, errors.New("noting order id")
 	}
 
-	if domain.TotalPrice != 0 {
-		return Domain{}, errors.New("total price empty")
-	}
 
-	if domain.PaymentMethodId != 0 {
+	if domain.PaymentMethodId == 0 {
 		return Domain{}, errors.New("payment method id empty")
 	}
 

@@ -10,7 +10,7 @@ type Transactions struct {
 	Id              int `gorm:"primaryKey"`
 	OrderId         int
 	PaymentMethodId int
-	Status          string `gorm:"default=Pending"`
+	Status          string `gorm:"default:Pending"`
 	TotalPrice      int
 	UserId          int
 

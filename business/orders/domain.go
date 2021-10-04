@@ -28,6 +28,7 @@ type Repository interface {
 	CreateOrder(ctx context.Context, domain Domain) (Domain, error)
 	CheckOrderPending(ctx context.Context, domain Domain) (Domain, error)
 	UpdateTotalPrice(ctx context.Context, domain Domain) (Domain, error)
+	GetOneOrder(ctx context.Context, domain Domain) (Domain, error)
 }
 
 type OrderDetailRepository interface {

@@ -15,6 +15,7 @@ import (
 	_googleBookController "books_online_api/controllers/google_books"
 	_orderController "books_online_api/controllers/orders"
 	_paymentMethodController "books_online_api/controllers/payment_methods"
+	_transactionsController "books_online_api/controllers/transactions"
 	_userController "books_online_api/controllers/users"
 	_bookDetailDb "books_online_api/drivers/databases/book_details"
 	_bookDetailsDb "books_online_api/drivers/databases/book_details"
@@ -118,8 +119,9 @@ func main() {
 	paymentMethodUsecase := _paymentMethodUsecase.NewPaymentMethodUsecase(paymentMethodRepository)
 	paymentMethodController := _paymentMethodController.NewPaymentMethodsController(paymentMethodUsecase)
 
-	transactionsRepository := _transactionsDB.NewTransactionsRepository(Conn)
+	transactionsRepository := _transactionsDB.NewTransactionsRepository(Conn, paymentMethodRepository, ordersRepository)
 	transactionUsecase := _transactionsUsecase.NewTransactionUsecase(transactionsRepository)
+	transactionController := _transactionsController.NewTransactionsControllers(transactionUsecase)
 
 	routesInit := routes.ControllerList{
 		JWTMiddleware:         configJwt.Init(),
@@ -129,6 +131,7 @@ func main() {
 		BooksController:       *booksController,
 		OrdersController:      *ordersController,
 		PaymentMethodsController: *paymentMethodController,
+		TransactionsController: *transactionController,
 	}
 
 	routesInit.RouteRegister(e)

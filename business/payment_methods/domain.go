@@ -24,4 +24,5 @@ type Usecase interface {
 
 type Repository interface {
 	CreatePaymentMethod(ctx context.Context, domain Domain) (Domain, error)
+	GetOnePaymentMethod(ctx context.Context, domain Domain) (Domain, error)
 }
