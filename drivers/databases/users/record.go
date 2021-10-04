@@ -2,6 +2,8 @@ package users
 
 import (
 	"books_online_api/business/users"
+	"books_online_api/drivers/databases/orders"
+	"books_online_api/drivers/databases/transactions"
 	"time"
 
 	"gorm.io/gorm"
@@ -16,9 +18,13 @@ type Users struct {
 	Role         int8 `gorm:"not null;default:1"` // 1 for reader, 2 for writer
 	Birth        time.Time
 	Gender       string
-	CreatedAt    time.Time
-	UpdatedAt    time.Time
-	DeletedAt    gorm.DeletedAt `gorm:"index"`
+
+	Orders       []*orders.Orders `gorm:"foreignKey:UserId;references:Id"`
+	Transactions []*transactions.Transactions `gorm:"foreignKey:UserId;references:Id"`
+
+	CreatedAt time.Time
+	UpdatedAt time.Time
+	DeletedAt gorm.DeletedAt `gorm:"index"`
 }
 
 func (user *Users) ToDomain() users.Domain {

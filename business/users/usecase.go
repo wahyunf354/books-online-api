@@ -55,7 +55,7 @@ func (uc *UserUseCase) Register(ctx context.Context, user Domain) (Domain, error
 	var errHash error
 	user.HashPassword, errHash = helpers.HashPassword(&user.Password)
 	if errHash != nil {
-		return Domain{}, errors.New("faild hashing password")
+		return Domain{}, errHash
 	}
 
 	user, err := uc.Repo.Register(ctx, user)
