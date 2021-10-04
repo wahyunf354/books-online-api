@@ -48,4 +48,5 @@ func (cl * ControllerList) RouteRegister(e *echo.Echo) {
 	transactionsJWT := ev1.Group("transactions")
 	transactionsJWT.Use(middleware.JWTWithConfig(cl.JWTMiddleware))
 	transactionsJWT.POST("", cl.TransactionsController.CreateTransactions)
+	transactionsJWT.PUT("", cl.TransactionsController.UpdateStatusTransactions)
 }

@@ -21,10 +21,12 @@ type Domain struct {
 
 type Usecase interface {
 	CreateTransactions(ctx context.Context, domain Domain) (Domain, error)
+	UpdateStatusTransaction(ctx context.Context, domain Domain) (Domain, error)
 }
 
 type Repository interface {
 	CreateTransactions(ctx context.Context, domain Domain) (Domain, error)
+	UpdateStatusTransaction(ctx context.Context, domain Domain) (Domain, error)
 }
 
 

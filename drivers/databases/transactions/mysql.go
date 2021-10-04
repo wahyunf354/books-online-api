@@ -53,3 +53,19 @@ func (t TransactionsRepository) CreateTransactions(ctx context.Context, domain t
 	return newTransaction.ToDomain(), nil
 }
 
+
+func (t TransactionsRepository) UpdateStatusTransaction(ctx context.Context, domain transactions.Domain) (transactions.Domain, error) {
+	var transaction Transactions
+
+	result := t.Conn.First(&transaction, domain.Id)
+
+	if result.Error != nil {
+		return transactions.Domain{}, result.Error
+	}
+
+	transaction.Status = domain.Status
+
+	t.Conn.Save(&transaction)
+
+	return transaction.ToDomain(), nil
+}

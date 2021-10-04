@@ -1,4 +1,4 @@
-package responses
+package create_transaction
 
 import (
 	"books_online_api/business/transactions"
