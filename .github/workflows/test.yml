@@ -60,7 +60,7 @@ jobs:
       - name: login registry docker hub
         uses: docker/login-action@v1
         with:
-          username: ${{ secrets.DOCKER_HUB_USENAME }}
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_TOKEN }}
       - name: push docker hub
         run: docker push wahyunf354/books_online:1.0.0
