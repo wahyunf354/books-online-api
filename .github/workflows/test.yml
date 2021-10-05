@@ -9,38 +9,6 @@ on:
       - 'master'
 
 jobs:
-  config:
-    name: do create config file
-    runs-on: ubuntu-latest
-    steps:
-      - name: running echo
-        shell: bash
-        env:
-          SERVER_ADDRESS: ${{ secrets.SERVER_ADDRESS }}
-          HOST_DATABASE: ${{ secrets.HOST_DATABASE }}
-          PORT_DATABASE: ${{ secrets.PORT_DATABASE }}
-          USER_DATABASE: ${{ secrets.USER_DATABASE }}
-          PASSWORD_DATABASE: ${{ secrets.PASSWORD_DATABASE }}
-          JWT_SECRET: ${{ secrets.JWT_SECRET }}
-        run: |
-          echo '{
-          "debug":true,
-          "server":{"address":"$SERVER_ADDRESS"},
-          "context":{"timeout":2},
-          "database":{
-            "prod":{
-              "host": "$HOST_DATABASE",
-              "port": "$PORT_DATABASE",
-              "user": "$USER_DATABASE",
-              "pass": "$PASSWORD_DATABASE"
-            }
-          }
-          "jwt": {
-            "secret": "$JWT_SECRET",
-            "expired": 72
-          }
-          }' > config.json
-
   #  job 1: unit test
   unit-test:
     name: do unit test to project go
