@@ -9,7 +9,31 @@ on:
       - 'master'
 
 jobs:
-#  job 1: unit test
+  config:
+    name: do create config file
+    runs-on: ubuntu-latest
+    steps:
+      - name: running echo
+        run: |
+          echo '{
+          "debug":true,
+          "server":{"address":"${{ secrets.DOCKER_HUB_USENAME }}"},
+          "context":{"timeout":2},
+          "database":{
+            "prod":{
+              "host": "${{ secrets.HOST_DATABASE }}",
+              "port": "${{ secrets.PORT_DATABASE }}",
+              "user": "${{ secrets.USER_DATABASE }}",
+              "pass": "${{ secrets.PASSWORD_DATABASE }}"
+            }
+          }
+          "jwt": {
+            "secret": "${{ secrets.JWT_SECRET }}",
+            "expired": 72
+          }
+          }' >> config.json
+
+  #  job 1: unit test
   unit-test:
     name: do unit test to project go
     runs-on: ubuntu-latest
@@ -23,6 +47,7 @@ jobs:
     - name: running unit test
       run: go test ./... -cover
 
+# job 2: build push docker
   build-push-docker:
     name: "Build image and push register"
     runs-on: ubuntu-latest
