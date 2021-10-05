@@ -17,11 +17,6 @@ import (
 	_paymentMethodController "books_online_api/controllers/payment_methods"
 	_transactionsController "books_online_api/controllers/transactions"
 	_userController "books_online_api/controllers/users"
-<<<<<<< HEAD:main.go
-	_booksLocal "books_online_api/drivers/localy/book_files"
-	_imagesBookLocal "books_online_api/drivers/localy/image_books_files"
-=======
->>>>>>> 016d8fe461faf5f03cc8f016a2ed7f1e305d1703:app/main.go
 	_bookDetailDb "books_online_api/drivers/databases/book_details"
 	_bookDetailsDb "books_online_api/drivers/databases/book_details"
 	_bookTypeDb "books_online_api/drivers/databases/book_types"
