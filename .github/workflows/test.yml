@@ -22,7 +22,6 @@ jobs:
           chmod 777 ./config.json
           pwd
           ls
-          cat config.json
 
   #  job 1: unit test
   unit-test:

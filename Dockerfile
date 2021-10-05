@@ -4,6 +4,7 @@ RUN mkdir /app
 ADD . /app
 
 WORKDIR /app
+RUN ls
 RUN go clean --modcache
 RUN go build -o main
 
@@ -12,6 +13,7 @@ FROM alpine:3.14
 WORKDIR /root/
 
 RUN pwd
+RUN ls
 COPY --from=builder /app/config.json .
 COPY --from=builder /app/main .
 EXPOSE 8080
