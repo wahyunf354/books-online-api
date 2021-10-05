@@ -1,0 +1,1 @@
+mysql -h databases-books-online.cl8sopwirx70.us-east-2.rds.amazonaws.com -u books_online -p
