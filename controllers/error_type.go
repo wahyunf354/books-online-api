@@ -1,0 +1,26 @@
+package controllers
+
+import "errors"
+
+var EMPTY_TITLE = errors.New("Title empty")
+var EMPTY_DESCRIPTION = errors.New("Description empty")
+var EMPTY_USER_ID = errors.New("User id empty")
+var FORBIDDEN_USER = errors.New("forbidden user")
+var ID_EMPTY = errors.New("Id empty")
+var NAME_BOOK_TYPE_EMPTY = errors.New("name book type empty")
+var UNIT_BOOK_TYPE_EMPTY = errors.New("unit book type empty")
+var RECORD_NOT_FOUND = errors.New("record not found")
+var KEYWORD_EMPTY = errors.New("keyword search empty")
+var NAME_EMPTY =  errors.New("Name is empty")
+var ADDRESS_EMPTY = errors.New("Address is empty")
+var AUTHOR_EMPTY = errors.New("Author is empty")
+var ORDER_ID_EMPTY = errors.New("noting order id")
+var TRANSACTION_ID_EMPTY =  errors.New("id transaction empty")
+var EMPTY_EMAIL = errors.New("email empty")
+var INVALID_EMAIL = errors.New("email not valid")
+var EMPTY_FIRST_NAME = errors.New("first name empty")
+var EMPTY_LAST_NAME = errors.New("last name empty")
+var EMPTY_PASSWORD = errors.New("password empty")
+var EMPTY_CONF_PASSWORD = errors.New("confirm password empty")
+var NOT_SAME_PASSWORD = errors.New("password not same")
+var WRONG_PASSWORD = errors.New("password wrong")

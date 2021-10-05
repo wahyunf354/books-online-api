@@ -8,7 +8,6 @@ import (
 	"books_online_api/controllers/books/responses/create_books"
 	"books_online_api/controllers/books/responses/get_books"
 	"books_online_api/controllers/books/responses/get_one_book"
-	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
 	"strconv"
@@ -29,34 +28,35 @@ func (bookController BooksController) CreateBook(c echo.Context) error {
 
 	cliams, err := middlewares.ExtractClaims(c)
 	if cliams.Role < 2 {
-		return controllers.NewErrorResponse(c, http.StatusForbidden, errors.New("forbidden user"))
+		return controllers.NewErrorResponse(c, controllers.FORBIDDEN_USER)
 	}
 
 	bookRequest := requests.BookRequest{}
 
 	err = c.Bind(&bookRequest)
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	bookRequest.FileBook, err = c.FormFile("file_book")
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	form, err := c.MultipartForm()
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	bookRequest.ImagesBook = form.File["images"]
+	bookRequest.UserId = cliams.UserId
 
 	ctx := c.Request().Context()
 
 	booksDomain, err := bookController.BooksUsecase.CreateBook(ctx, bookRequest.ToDomain())
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 	// TODO: RESPONSE URL FILE NYA DIBUAT FULL DENGAN HOST
 	return controllers.NewSuccessResponse(c, http.StatusOK, create_books.FromDomain(booksDomain))
@@ -72,7 +72,7 @@ func (booksController BooksController) GetBooks(c echo.Context) error {
 	result, err := booksController.BooksUsecase.GetBooks(ctx, request.ToDomain())
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	return controllers.NewSuccessResponse(c, http.StatusOK, get_books.FromListDomain(result))
@@ -87,7 +87,7 @@ func (booksController BooksController) GetOneBook(c echo.Context)  error {
 	book, err := booksController.BooksUsecase.GetOneBook(ctx, request.ToDomain())
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	return controllers.NewSuccessResponse(c, http.StatusOK, get_one_book.FromDomain(book))

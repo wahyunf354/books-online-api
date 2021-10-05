@@ -1,6 +1,7 @@
 package orders
 
 import (
+	"books_online_api/controllers"
 	"context"
 	"time"
 )
@@ -21,8 +22,8 @@ func NewOrderUsecase(repository Repository, repoDetails OrderDetailRepository, t
 
 func (o OrderUsecase) CreateOrder(ctx context.Context, domain Domain) (Domain, error) {
 
-	if domain.UserId < 0 {
-		return Domain{}, nil
+	if domain.UserId < 1 {
+		return Domain{}, controllers.FORBIDDEN_USER
 	}
 
 	resultOrder, err := o.Repo.CheckOrderPending(ctx, domain)
