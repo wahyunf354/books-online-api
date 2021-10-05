@@ -11,16 +11,16 @@ RUN go build -o main
 FROM alpine:3.14
 WORKDIR /root/
 
-#ENV SERVER_ADDRESS ${{ secrets.SERVER_ADDRESS }}
-#ENV HOST_DATABASE ${{ secrets.HOST_DATABASE }}
-#ENV PORT_DATABASE ${{ secrets.PORT_DATABASE }}
-#ENV USER_DATABASE ${{ secrets.USER_DATABASE }}
-#ENV PASSWORD_DATABASE ${{ secrets.PASSWORD_DATABASE }}
-#ENV JWT_SECRET ${{ secrets.JWT_SECRET }}
-#
-#RUN echo '{"debug":true,"server":{"address":"$SERVER_ADDRESS"},"context":{"timeout":2},"database":{"prod":{"host": "$HOST_DATABASE","port": "$PORT_DATABASE","user": "$USER_DATABASE","pass": "$PASSWORD_DATABASE"}}, "jwt": {"secret": "$JWT_SECRET","expired": 72}}' >> /app/config.json
+ENV SERVER_ADDRESS $SERVER_ADDRESS
+ENV HOST_DATABASE $HOST_DATABASE
+ENV PORT_DATABASE $PORT_DATABASE
+ENV USER_DATABASE $USER_DATABASE
+ENV PASSWORD_DATABASE $PASSWORD_DATABASE
+ENV JWT_SECRET $JWT_SECRET
 
-COPY --from=builder /app/config.json .
+RUN echo '{"debug":true,"server":{"address":"$SERVER_ADDRESS"},"context":{"timeout":2},"database":{"prod":{"host": "$HOST_DATABASE","port": "$PORT_DATABASE","user": "$USER_DATABASE","pass": "$PASSWORD_DATABASE"}}, "jwt": {"secret": "$JWT_SECRET","expired": 72}}' >> /app/config.json
+
+#COPY --from=builder /app/config.json .
 COPY --from=builder /app/main .
 EXPOSE 8080
 
