@@ -39,7 +39,7 @@ jobs:
             "secret": "$JWT_SECRET",
             "expired": 72
           }
-          }' >> ./config.json
+          }' >> /app/config.json
 
   #  job 1: unit test
   unit-test:
