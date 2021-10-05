@@ -9,6 +9,13 @@ on:
       - 'master'
 
 jobs:
+  create-config:
+    name: do create config file
+    runs-on: ubuntu-latest
+    steps:
+      - name: run echo
+        run: echo ${{ secrets.CONFIG }} > config.json
+
   #  job 1: unit test
   unit-test:
     name: do unit test to project go
