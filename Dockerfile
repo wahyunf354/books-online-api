@@ -20,7 +20,7 @@ WORKDIR /root/
 #
 #RUN echo '{"debug":true,"server":{"address":"$SERVER_ADDRESS"},"context":{"timeout":2},"database":{"prod":{"host": "$HOST_DATABASE","port": "$PORT_DATABASE","user": "$USER_DATABASE","pass": "$PASSWORD_DATABASE"}}, "jwt": {"secret": "$JWT_SECRET","expired": 72}}' >> /app/config.json
 
-#COPY --from=builder /app/config.json .
+COPY --from=builder /app/config.json .
 COPY --from=builder /app/main .
 EXPOSE 8080
 
