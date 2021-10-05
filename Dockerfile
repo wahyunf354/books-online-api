@@ -10,7 +10,23 @@ RUN go build -o main
 #stage 2
 FROM alpine:3.14
 WORKDIR /root/
-#COPY --from=builder /app/config.json .
+RUN echo '{
+  "debug":true,
+  "server":{"address":"${{ secrets.SERVER_ADDRESS }}"},
+  "context":{"timeout":2},
+  "database":{
+  "prod":{
+  "host": "${{ secrets.HOST_DATABASE }}",
+  "port": "${{ secrets.PORT_DATABASE }}",
+  "user": "${{ secrets.USER_DATABASE }}",
+  "pass": "${{ secrets.PASSWORD_DATABASE }}"
+  }
+  }
+  "jwt": {
+  "secret": "${{ secrets.JWT_SECRET }}",
+  "expired": 72
+  }
+}' >> /app/config.json
 COPY --from=builder /app/main .
 EXPOSE 8080
 

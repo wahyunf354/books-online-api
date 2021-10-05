@@ -88,5 +88,5 @@ jobs:
             StrictHostKeyChecking=no
           END
       - name: Connect EC2 & Remove All Container & Pull from Registry & Start
-        run: ssh development 'docker rm -f $(docker ps -a -q) && docker pull wahyunf354/books_online:1.0.0 && docker run -d -p 8080:8080 --name=books_online wahyunf354/books-online:1.0.0'
+        run: ssh development 'docker rm -f $(docker ps -a -q) && docker pull wahyunf354/books_online:1.0.0 && docker run -d -p 8080:8080 --name=books_online wahyunf354/books_online:1.0.0'
 
