@@ -4,7 +4,6 @@ import "errors"
 
 var EMPTY_TITLE = errors.New("Title empty")
 var EMPTY_DESCRIPTION = errors.New("Description empty")
-var EMPTY_USER_ID = errors.New("User id empty")
 var FORBIDDEN_USER = errors.New("forbidden user")
 var ID_EMPTY = errors.New("Id empty")
 var NAME_BOOK_TYPE_EMPTY = errors.New("name book type empty")

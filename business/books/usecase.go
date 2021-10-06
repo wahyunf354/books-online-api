@@ -63,10 +63,6 @@ func (bookUsecase *BookUsecase) CreateBook(ctx context.Context, domain Domain) (
 		return Domain{}, controllers.EMPTY_DESCRIPTION
 	}
 
-	if domain.UserId == 0 {
-		return Domain{}, controllers.EMPTY_USER_ID
-	}
-
 	resultBook, err = bookUsecase.Loc.CreateBook(ctx, domain)
 
 	if err != nil {

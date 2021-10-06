@@ -38,9 +38,6 @@ func CheckStatus(err error) int {
 	if err == EMPTY_DESCRIPTION {
 		return http.StatusBadRequest
 	}
-	if err == EMPTY_USER_ID {
-		return http.StatusBadRequest
-	}
 	if err == FORBIDDEN_USER {
 		return http.StatusForbidden
 	}
