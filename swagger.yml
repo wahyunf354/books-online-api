@@ -1,9 +1,9 @@
 openapi: 3.0.0
 servers:
   - description: Develompent
-    url: http://localhost:8000
+    url: http://localhost:8000/api/
   - description: Production
-    url: https://
+    url: http://3.133.85.122:8080/api/
 info:
   description: 
     Rest API Books Online sebuah aplikasi yang<br>
@@ -20,7 +20,8 @@ tags:
     description: Endpoint untuk manipulasi data users
   - name: Books
     description: Enpoint untuk manipulasi data buku
-
+  - name: Orders
+    description: Enpoint to add order
 paths:
   /v1/books:
     get:
@@ -68,6 +69,8 @@ paths:
                   $ref: '#/components/schemas/BooksResponse'
         '400':
           description: bad input parameter
+        '500':
+          description: respon ketika terjadi masalah di server
     post: 
       tags:
         - Books
@@ -76,9 +79,18 @@ paths:
       description: Membuat buku baru hanya dapat dilakukan oleh user yang mendaftar sebagai penulis
       requestBody: 
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
+              required:
+                - title
+                - book_type_id
+                - category_id
+                - price
+                - user_id
+                - description
+                - page_count
+                - image
               properties: 
                 title: 
                   type: string
@@ -110,6 +122,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreateBookResponse'
+        '400':
+          description: terjadi masalah ketika data kosong atau data yang diinputkan bermasalah 
+        '500':
+          description: respon ketika terjadi masalah di server
 
   /v1/books/:id:
     get: 
@@ -124,6 +140,102 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BookDetailResponse'
+  /v1/booktypes:
+    post:
+      tags:
+        - Books
+      summary: Membuat tipe buku
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: beli
+                unit:
+                  type: string
+                  example: selamanya
+      responses:
+        '201':
+          description: Berhasil memasukkan data tipe buku
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 201
+                  message:
+                    type: string
+                    example: Success create new type book
+                  data:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      name: 
+                        type: string
+                      unit:
+                        type: string
+                      created_at:
+                        type: string
+                        format: date-time
+                      updated_at:
+                        type: string
+                        format: date-time
+        '400':
+          description: Respon jika terjadi masalah pada request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: integer
+                    example: 400
+                  message:
+                    type: string
+                    example: Terjadi masalah ketika request
+        '500':
+          description: Respon jika terjadi masalah pada server internal
+  /v1/categories:
+    post:
+      tags:
+        - Books
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - title
+              properties:
+                title:
+                  type: string
+      responses:
+        '201':
+          description: Berhasil membuat data kategori buku
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  code: 
+                    type: integer
+                  message:
+                    type: string
+                  data:
+                    type: object
+                    properties:
+                      title: 
+                        type: string
+        '400':
+          description: Respon ketika nama kategori kosong atau request yang dikirimkan bermasalah
+        '500':
+          description: Server bermasalah
   /v1/users/register:
     post:
       tags:
@@ -196,16 +308,16 @@ paths:
       description: untuk melakukan upload harus mencantumkan header authentication dengan token
       requestBody:
         content:
-          application/json:
+          multipart/form-data:
             schema:
               type: object
               properties:
                 userId: 
                   type: integer
                   example: 1
-                image: 
+                image:
                   type: string
-                  format: file
+                  format: binary
                 
       responses:
         '201':
@@ -214,6 +326,29 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/UserProfileResponse'
+        '400':
+          description: respon ketika request yang diberikan bermasalah
+        '500':
+          description: respon ketika terjadi masalah di server
+  /v1/orders:
+    post:
+      tags:
+        - Orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book_id:
+                  type: integer
+                  example: 4
+                qty:
+                  type: integer
+                  example: 1
+      responses:
+        201:
+          description: success create order
 
 components:
   schemas:
@@ -484,6 +619,22 @@ components:
           example: success
         data:
           type: object
-          # TODO: this
-
-        
+          properties: 
+            title:
+              type: string
+            book_type_id:
+              type: string
+            category_id:
+              type: string
+            price:
+              type: string
+            user_id:
+              type: string
+            description: 
+              type: string
+            page_count:
+              type: string
+            imageBooks: 
+              type: array
+              items:
+                type: string

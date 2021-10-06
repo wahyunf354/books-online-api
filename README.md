@@ -17,14 +17,28 @@ Book Online adalah sebuah aplikasi semacam perpustakaan online yang dibuat untuk
 ## ERD
 ![erd](ERD.png)
 
+## Technology
+- Golang
+- Mysql
+- Gorm
+- JWT
+- Google Books API
+- Testify
+- Docker
+- EC2 AWS
+- RDS AWS 
+- viper
+
 ## Contributors
 
-Wahyu Nur Fadillah
+- Wahyu Nur Fadillah
 
 ## TODO
 
 - [ ] Membuat ERD Rekening User
 - [ ] Membuat No Telpon Users
+- [ ] Delete order detail
+- [ ] Upload user profile
 
 ## NOTES
 
