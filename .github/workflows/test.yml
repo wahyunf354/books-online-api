@@ -9,7 +9,22 @@ on:
       - 'master'
 
 jobs:
-  #  job 1: unit test
+#  job 1: create config
+  create-config:
+    name: do create config file
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: run echo
+        env:
+          CONFIG: ${{ secrets.CONFIG }}
+        run: |
+          echo "$CONFIG" > ./config.json
+          chmod 777 ./config.json
+          pwd
+          ls
+
+#  job 2: unit test
   unit-test:
     name: do unit test to project go
     runs-on: ubuntu-latest
@@ -23,7 +38,7 @@ jobs:
     - name: running unit test
       run: go test ./... -cover
 
-# job 2: build push docker
+# job 3: build push docker
   build-push-docker:
     name: "Build image and push register"
     runs-on: ubuntu-latest
@@ -40,6 +55,7 @@ jobs:
       - name: push docker hub
         run: docker push wahyunf354/books_online:1.0.0
 
+# job 4: deploy to ec2
   deployment-ec2:
     name: "Deploy to ec2 from registry docker hub"
     runs-on: ubuntu-latest
