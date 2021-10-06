@@ -1,8 +1,8 @@
 package google_books
 
 import (
+	"books_online_api/controllers"
 	"context"
-	"errors"
 	"time"
 )
 
@@ -20,7 +20,7 @@ func NewGoogleBookThirtPartUsecase(googleBooks ThirdPartyGoogleBooks, timeout ti
 
 func (gb *GoogleBookUserCase) SearchBooks (ctx context.Context, keyword string, startIndex int, maxResult int) ([]Domain, error) {
 	if keyword == "" {
-		return []Domain{}, errors.New("keyword search empty")
+		return []Domain{}, controllers.KEYWORD_EMPTY
 	}
 
 	if maxResult == 0 {

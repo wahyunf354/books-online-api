@@ -1,8 +1,8 @@
 package book_types
 
 import (
+	"books_online_api/controllers"
 	"context"
-	"errors"
 	"time"
 )
 
@@ -20,11 +20,11 @@ func NewBooksUseCase(repo Repository, timeout time.Duration) Usecase {
 
 func (uc *BookTypesUseCase) CreateBookType(ctx context.Context, bookType Domain) (Domain, error) {
 	if bookType.Name == "" {
-		return Domain{}, errors.New("name book type empty")
+		return Domain{}, controllers.NAME_BOOK_TYPE_EMPTY
 	}
 
 	if bookType.Unit == "" {
-		return Domain{}, errors.New("unit book type empty")
+		return Domain{}, controllers.UNIT_BOOK_TYPE_EMPTY
 	}
 
 	bookType, err := uc.Repo.CreateBookType(ctx, bookType)

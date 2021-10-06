@@ -5,7 +5,6 @@ import (
 	"books_online_api/business/payment_methods"
 	"books_online_api/controllers"
 	"books_online_api/controllers/payment_methods/requests/create_payment_methods_requests"
-	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -23,11 +22,11 @@ func (p PaymentMethodsController) CreatePaymentMethods(c echo.Context) error {
 	cliams, err := middlewares.ExtractClaims(c)
 
 	if cliams.Role != 3 {
-		return controllers.NewErrorResponse(c, http.StatusForbidden, errors.New("forbidden user"))
+		return controllers.NewErrorResponse(c, controllers.FORBIDDEN_USER)
 	}
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	var request create_payment_methods_requests.CreatePaymentMethodRequest
@@ -36,7 +35,7 @@ func (p PaymentMethodsController) CreatePaymentMethods(c echo.Context) error {
 
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	ctx := c.Request().Context()
@@ -44,7 +43,7 @@ func (p PaymentMethodsController) CreatePaymentMethods(c echo.Context) error {
 	paymentMethod, err := p.PaymentMethodsUsecase.CreatePaymentMethod(ctx, request.ToDomain())
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	return controllers.NewSuccessResponse(c, http.StatusOK, create_payment_methods_requests.FromDomain(paymentMethod))

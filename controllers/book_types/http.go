@@ -6,7 +6,6 @@ import (
 	"books_online_api/controllers"
 	"books_online_api/controllers/book_types/requests"
 	"books_online_api/controllers/book_types/responses"
-	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -26,16 +25,16 @@ func (bookTypesController BookTypesController) CreateBookType(c echo.Context) er
 	err := c.Bind(&bookTypeRequest)
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	cliams, err := middlewares.ExtractClaims(c)
 	if cliams.Role != 3 {
-		return controllers.NewErrorResponse(c, http.StatusForbidden, errors.New("forbidden user"))
+		return controllers.NewErrorResponse(c, controllers.FORBIDDEN_USER)
 	}
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	domain := bookTypeRequest.ToDomain()
@@ -45,7 +44,7 @@ func (bookTypesController BookTypesController) CreateBookType(c echo.Context) er
 	result, err := bookTypesController.BookTypesUsecase.CreateBookType(ctx, domain)
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	return controllers.NewSuccessResponse(c, http.StatusCreated, responses.FromDomain(result))

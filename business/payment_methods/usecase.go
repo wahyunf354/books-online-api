@@ -1,8 +1,8 @@
 package payment_methods
 
 import (
+	"books_online_api/controllers"
 	"context"
-	"errors"
 )
 
 type PaymentMethodUsecase struct {
@@ -15,13 +15,13 @@ func NewPaymentMethodUsecase(repo Repository) Usecase {
 
 func (p PaymentMethodUsecase) CreatePaymentMethod(ctx context.Context, domain Domain) (Domain, error) {
 	if domain.Name == "" {
-		return Domain{}, errors.New("Name is empty")
+		return Domain{}, controllers.NAME_EMPTY
 	}
 	if domain.Address == "" {
-		return Domain{}, errors.New("Address is empty")
+		return Domain{}, controllers.ADDRESS_EMPTY
 	}
 	if domain.Author == "" {
-		return Domain{}, errors.New("Author is empty")
+		return Domain{}, controllers.AUTHOR_EMPTY
 	}
 
 	resultDomain, err := p.Repo.CreatePaymentMethod(ctx, domain)

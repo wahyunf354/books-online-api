@@ -5,7 +5,6 @@ import (
 	"books_online_api/business/orders"
 	"books_online_api/controllers"
 	"books_online_api/controllers/orders/requests/create_order"
-	"errors"
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
@@ -23,12 +22,12 @@ func (o OrderController) CreateOrder(c echo.Context) error {
 
 	err := c.Bind(&request)
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	cliams,_ := middlewares.ExtractClaims(c)
 	if cliams.Role < 1 {
-		return controllers.NewErrorResponse(c, http.StatusForbidden, errors.New("forbidden user"))
+		return controllers.NewErrorResponse(c, controllers.FORBIDDEN_USER)
 	}
 
 	request.UserId = cliams.UserId
@@ -38,7 +37,7 @@ func (o OrderController) CreateOrder(c echo.Context) error {
 	order, err := o.OrderUsecase.CreateOrder(ctx, request.ToDomain())
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	return controllers.NewSuccessResponse(c, http.StatusOK, order)

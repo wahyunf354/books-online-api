@@ -2,9 +2,9 @@ package users
 
 import (
 	"books_online_api/app/middlewares"
+	"books_online_api/controllers"
 	"books_online_api/helpers"
 	"context"
-	"errors"
 	"time"
 )
 
@@ -25,31 +25,31 @@ func NewUserUseCase(repo Repository, timeout time.Duration, configJWT middleware
 func (uc *UserUseCase) Register(ctx context.Context, user Domain) (Domain, error) {
 
 	if user.Email == "" {
-		return Domain{}, errors.New("email empty")
+		return Domain{}, controllers.EMPTY_EMAIL
 	}
 
 	if !helpers.IsInvalidEmail(user.Email) {
-		return Domain{}, errors.New("email not valid")
+		return Domain{}, controllers.INVALID_EMAIL
 	}
 
 	if user.FirstName == "" {
-		return Domain{}, errors.New("first name empty")
+		return Domain{}, controllers.EMPTY_FIRST_NAME
 	}
 
 	if user.LastName == "" {
-		return Domain{}, errors.New("last name empty")
+		return Domain{}, controllers.EMPTY_LAST_NAME
 	}
 
 	if user.Password == "" {
-		return Domain{}, errors.New("password empty")
+		return Domain{}, controllers.EMPTY_PASSWORD
 	}
 
 	if user.ConfPassword == "" {
-		return Domain{}, errors.New("confirm password empty")
+		return Domain{}, controllers.EMPTY_CONF_PASSWORD
 	}
 
 	if user.Password != user.ConfPassword {
-		return Domain{}, errors.New("password not same")
+		return Domain{}, controllers.NOT_SAME_PASSWORD
 	}
 
 	var errHash error
@@ -69,15 +69,15 @@ func (uc *UserUseCase) Register(ctx context.Context, user Domain) (Domain, error
 
 func (uc *UserUseCase) Login(ctx context.Context, email string, password string) (Domain, error) {
 	if email == "" {
-		return Domain{}, errors.New("email empty")
+		return Domain{}, controllers.EMPTY_EMAIL
 	}
 
 	if !helpers.IsInvalidEmail(email) {
-		return Domain{}, errors.New("invalid email")
+		return Domain{}, controllers.INVALID_EMAIL
 	}
 
 	if password == "" {
-		return Domain{}, errors.New("password empty")
+		return Domain{}, controllers.EMPTY_PASSWORD
 	}
 
 	user, err := uc.Repo.Login(ctx, email)
@@ -87,7 +87,7 @@ func (uc *UserUseCase) Login(ctx context.Context, email string, password string)
 	}
 
 	if !helpers.ComparePassword(user.HashPassword, password) {
-		return Domain{}, errors.New("password wrong")
+		return Domain{}, controllers.WRONG_PASSWORD
 	}
 
 	user.Token, err = uc.JWTConfig.GenerateTokenJWT(user.Id, user.Role)

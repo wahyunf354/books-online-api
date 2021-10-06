@@ -1,6 +1,7 @@
 package transactions
 
 import (
+	"books_online_api/controllers"
 	"context"
 	"errors"
 )
@@ -18,11 +19,11 @@ func NewTransactionUsecase(repo Repository) Usecase {
 
 func (t TransactionsUsecase) CreateTransactions(ctx context.Context, domain Domain) (Domain, error) {
 	if domain.UserId == 0 {
-		return Domain{}, errors.New("noting user")
+		return Domain{}, controllers.FORBIDDEN_USER
 	}
 
 	if domain.OrderId == 0 {
-		return Domain{}, errors.New("noting order id")
+		return Domain{}, controllers.ORDER_ID_EMPTY
 	}
 
 
@@ -46,12 +47,15 @@ func (t TransactionsUsecase) UpdateStatusTransaction(ctx context.Context, domain
 	}
 
 	if domain.Id == 0 {
-		return Domain{}, errors.New("id transaction empty")
+		return Domain{}, controllers.TRANSACTION_ID_EMPTY
 	}
 
 	transactions, err := t.Repo.UpdateStatusTransaction(ctx, domain)
 
 	if err != nil {
+		if err.Error() == "record not found" {
+			return Domain{}, controllers.RECORD_NOT_FOUND
+		}
 		return Domain{}, err
 	}
 

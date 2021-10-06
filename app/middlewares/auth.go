@@ -5,7 +5,6 @@ import (
 	"github.com/golang-jwt/jwt"
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
-	"net/http"
 	"time"
 )
 
@@ -25,7 +24,7 @@ func (configJWT *ConfigJwt) Init() middleware.JWTConfig {
 		Claims: &JwtCustomClaims{},
 		SigningKey: []byte(configJWT.SecretJwt),
 		ErrorHandlerWithContext: middleware.JWTErrorHandlerWithContext(func(err error, context echo.Context) error {
-			return controllers.NewErrorResponse(context, http.StatusForbidden, err)
+			return controllers.NewErrorResponse(context, controllers.FORBIDDEN_USER)
 		}),
 	}
 }
