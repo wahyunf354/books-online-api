@@ -28,6 +28,7 @@ jobs:
   unit-test:
     name: do unit test to project go
     runs-on: ubuntu-latest
+    needs: create-config
     steps:
     - name: setup github action (CI)
       uses: actions/checkout@v2
