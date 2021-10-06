@@ -84,7 +84,7 @@ func TestPaymentMethodUsecase_CreatePaymentMethod(t *testing.T) {
 		})
 		assert.NotNil(t, err)
 		assert.Equal(t, controllers.AUTHOR_EMPTY, err)
-		assert.Equal(t, "", paymentMethod.Author)
+	assert.Equal(t, "", paymentMethod.Author)
 	})
 
 }
