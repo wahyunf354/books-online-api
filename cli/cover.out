@@ -1,12 +1,4 @@
 mode: set
-books_online_api/business/book_types/usecase.go:14.70,19.2 1 1
-books_online_api/business/book_types/usecase.go:21.98,22.25 1 1
-books_online_api/business/book_types/usecase.go:26.2,26.25 1 1
-books_online_api/business/book_types/usecase.go:30.2,32.16 2 1
-books_online_api/business/book_types/usecase.go:36.2,36.22 1 1
-books_online_api/business/book_types/usecase.go:22.25,24.3 1 1
-books_online_api/business/book_types/usecase.go:26.25,28.3 1 1
-books_online_api/business/book_types/usecase.go:32.16,34.3 1 0
 books_online_api/business/books/usecase.go:15.83,21.2 1 1
 books_online_api/business/books/usecase.go:23.86,25.20 1 1
 books_online_api/business/books/usecase.go:29.2,31.16 2 1
@@ -25,6 +17,14 @@ books_online_api/business/books/usecase.go:72.2,72.24 1 1
 books_online_api/business/books/usecase.go:58.24,60.3 1 1
 books_online_api/business/books/usecase.go:62.30,64.3 1 1
 books_online_api/business/books/usecase.go:68.16,70.3 1 0
+books_online_api/business/book_types/usecase.go:14.70,19.2 1 1
+books_online_api/business/book_types/usecase.go:21.98,22.25 1 1
+books_online_api/business/book_types/usecase.go:26.2,26.25 1 1
+books_online_api/business/book_types/usecase.go:30.2,32.16 2 1
+books_online_api/business/book_types/usecase.go:36.2,36.22 1 1
+books_online_api/business/book_types/usecase.go:22.25,24.3 1 1
+books_online_api/business/book_types/usecase.go:26.25,28.3 1 1
+books_online_api/business/book_types/usecase.go:32.16,34.3 1 0
 books_online_api/business/orders/usecase.go:15.111,21.2 1 1
 books_online_api/business/orders/usecase.go:23.87,25.23 1 1
 books_online_api/business/orders/usecase.go:29.2,29.24 1 1
@@ -41,6 +41,16 @@ books_online_api/business/orders/usecase.go:44.3,44.20 1 0
 books_online_api/business/orders/usecase.go:41.17,43.4 1 0
 books_online_api/business/orders/usecase.go:50.16,52.3 1 0
 books_online_api/business/orders/usecase.go:56.16,58.3 1 0
+books_online_api/business/payment_methods/usecase.go:12.55,14.2 1 1
+books_online_api/business/payment_methods/usecase.go:16.103,17.23 1 1
+books_online_api/business/payment_methods/usecase.go:20.2,20.26 1 1
+books_online_api/business/payment_methods/usecase.go:23.2,23.25 1 1
+books_online_api/business/payment_methods/usecase.go:27.2,29.16 2 1
+books_online_api/business/payment_methods/usecase.go:33.2,33.26 1 1
+books_online_api/business/payment_methods/usecase.go:17.23,19.3 1 1
+books_online_api/business/payment_methods/usecase.go:20.26,22.3 1 1
+books_online_api/business/payment_methods/usecase.go:23.25,25.3 1 1
+books_online_api/business/payment_methods/usecase.go:29.16,31.3 1 0
 books_online_api/business/users/usecase.go:17.102,23.2 1 1
 books_online_api/business/users/usecase.go:25.83,27.22 1 1
 books_online_api/business/users/usecase.go:31.2,31.41 1 1
