@@ -31,7 +31,7 @@ func (gbController GoogleBooksController) SearchBooks(c echo.Context) error {
 	ctx := c.Request().Context()
 	resultGoogleBooks, err := gbController.GoogleBookUsecase.SearchBooks(ctx, googleBookDomain.Keyword, googleBookDomain.StartIndex, googleBookDomain.MaxResults)
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 	 return controllers.NewSuccessResponse(c, http.StatusOK, responses.FormListDomain(resultGoogleBooks))
 }

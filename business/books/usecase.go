@@ -1,8 +1,8 @@
 package books
 
 import (
+	"books_online_api/controllers"
 	"context"
-	"errors"
 	"time"
 )
 
@@ -21,13 +21,17 @@ func NewBookUsecase (loc Localy, repo Repository,  timeout time.Duration) Usecas
 }
 
 func (b *BookUsecase) GetOneBook(ctx context.Context, domain Domain) (Domain, error) {
+
 	if domain.Id == 0 {
-		return Domain{}, errors.New("Id empty")
+		return Domain{}, controllers.ID_EMPTY
 	}
 
 	resultDomain, err := b.Repo.GetOneBook(ctx, domain)
 
 	if err != nil {
+		if err.Error() == "record not found" {
+			return Domain{}, controllers.RECORD_NOT_FOUND
+		}
 		return Domain{}, err
 	}
 
@@ -52,19 +56,11 @@ func (bookUsecase *BookUsecase) CreateBook(ctx context.Context, domain Domain) (
 	var err error
 
 	if domain.Title == "" {
-		return Domain{}, errors.New("Title empty")
+		return Domain{}, controllers.EMPTY_TITLE
 	}
 
 	if domain.Description == "" {
-		return Domain{}, errors.New("Description empty")
-	}
-
-	if domain.UserId == 0 {
-		return Domain{}, errors.New("User id empty")
-	}
-
-	if len(domain.FileCover) < 1 {
-		return Domain{}, errors.New("image cover empty")
+		return Domain{}, controllers.EMPTY_DESCRIPTION
 	}
 
 	resultBook, err = bookUsecase.Loc.CreateBook(ctx, domain)

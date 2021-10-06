@@ -24,14 +24,14 @@ func (userController UserController) Register(c echo.Context) error {
 	userRegister := requests.UserRegister{}
 	err := c.Bind(&userRegister)
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	ctx := c.Request().Context()
 	user, err := userController.UserUseCase.Register(ctx, userRegister.ToDomain())
 
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	return controllers.NewSuccessResponse(c, http.StatusCreated, register.FromDomain(user))
@@ -41,13 +41,13 @@ func (userController UserController) Login(c echo.Context) error {
 	userLogin := requests.UserLogin{}
 	err := c.Bind(&userLogin)
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusInternalServerError, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	ctx := c.Request().Context()
 	user, err := userController.UserUseCase.Login(ctx, userLogin.ToDomain().Email, userLogin.ToDomain().Password)
 	if err != nil {
-		return controllers.NewErrorResponse(c, http.StatusBadRequest, err)
+		return controllers.NewErrorResponse(c, err)
 	}
 
 	return controllers.NewSuccessResponse(c, http.StatusOK, login.FromDomain(user))
