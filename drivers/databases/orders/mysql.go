@@ -2,6 +2,7 @@ package orders
 
 import (
 	"books_online_api/business/orders"
+	"books_online_api/controllers"
 	"context"
 	"gorm.io/gorm"
 )
@@ -71,7 +72,7 @@ func (o OrdersRepository) CheckOrderPending(ctx context.Context, domain orders.D
 	resultDb := o.Conn.Where("status = ?", "Pending").First(&order)
 
 	if resultDb.Error != nil {
-		return orders.Domain{}, resultDb.Error
+		return orders.Domain{}, controllers.RECORD_NOT_FOUND
 	}
 	return order.ToDomain(domain), nil
 }

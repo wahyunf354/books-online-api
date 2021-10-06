@@ -12,7 +12,7 @@ type Orders struct {
 	Id         int `gorm:"primaryKey"`
 	UserId     int `gorm:"not null"`
 	TotalPrice int
-	Status     string
+	Status     string `gorm:"default:Pending"`
 
 	OrderDetails []*order_details.OrderDetails `gorm:"foreignKey:OrderId;references:Id"`
 	Transactions []*transactions.Transactions `gorm:"foreignKey:OrderId;references:Id"`

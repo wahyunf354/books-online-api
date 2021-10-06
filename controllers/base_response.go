@@ -79,5 +79,11 @@ func CheckStatus(err error) int {
 	if err == WRONG_PASSWORD {
 		return http.StatusForbidden
 	}
+	if err == EMPTY_BOOK_ID {
+		return http.StatusBadRequest
+	}
+	if err == EMPTY_QTY {
+		return http.StatusBadRequest
+	}
 	return http.StatusInternalServerError
 }

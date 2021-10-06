@@ -6,16 +6,16 @@ import (
 )
 
 type OrderResponse struct {
-	Id int
-	UserId int
-	BookId int
-	Qty int
+	Id int `json:"id"`
+	UserId int `json:"user_id"`
+	BookId int `json:"book_id"`
+	Qty int `json:"qty"`
 
-	TotalPrice int
-	Price int
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	DeletedAt interface{}
+	TotalPrice int `json:"total_price"`
+	Price int `json:"price"`
+	CreatedAt time.Time `json:"created_at"`
+	UpdatedAt time.Time `json:"updated_at"`
+	DeletedAt interface{} `json:"deleted_at"`
 }
 
 func FromDomain(domain orders.Domain) OrderResponse {
