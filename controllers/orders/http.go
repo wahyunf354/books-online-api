@@ -40,5 +40,5 @@ func (o OrderController) CreateOrder(c echo.Context) error {
 		return controllers.NewErrorResponse(c, err)
 	}
 
-	return controllers.NewSuccessResponse(c, http.StatusOK, order)
+	return controllers.NewSuccessResponse(c, http.StatusCreated, order)
 }

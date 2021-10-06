@@ -3,7 +3,7 @@ servers:
   - description: Develompent
     url: http://localhost:8000
   - description: Production
-    url: https://
+    url: http://
 info:
   description: 
     Rest API Books Online sebuah aplikasi yang<br>
@@ -20,7 +20,8 @@ tags:
     description: Endpoint untuk manipulasi data users
   - name: Books
     description: Enpoint untuk manipulasi data buku
-
+  - name: Orders
+    description: Enpoint to add order
 paths:
   /v1/books:
     get:
@@ -214,6 +215,26 @@ paths:
             application/json:
               schema: 
                 $ref: '#/components/schemas/UserProfileResponse'
+  /v1/orders:
+    post:
+      tags:
+        - Orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book_id:
+                  type: integer
+                  example: 4
+                qty:
+                  type: integer
+                  example: 1
+      responses:
+        201:
+          description: success create order
+
 
 components:
   schemas:
