@@ -4,9 +4,13 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="a5031f2a-be90-4b44-a30c-5d557dee8690" name="Changes" comment="add .idea to .gitignore">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
+=======
+    <list default="true" id="a5031f2a-be90-4b44-a30c-5d557dee8690" name="Changes" comment="add .idea to .gitignore" />
+>>>>>>> googleBooksTest
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -70,7 +74,11 @@
       <recent name="$PROJECT_DIR$/drivers/databases" />
     </key>
   </component>
+<<<<<<< HEAD
   <component name="RunManager" selected="Swagger Codegen.swagger.yml">
+=======
+  <component name="RunManager" selected="Go Test.TestPaymentMethodUsecase_CreatePaymentMethod/Test_Case_2_|_Name_empty in books_online_api/business/payment_methods">
+>>>>>>> googleBooksTest
     <configuration name="TestPaymentMethodUsecase_CreatePaymentMethod/Test_Case_2_|_Name_empty in books_online_api/business/payment_methods" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="books-online-api" />
       <working_directory value="$PROJECT_DIR$/business/payment_methods" />
