@@ -1,0 +1,29 @@
+{
+  "debug": true,
+  "server": {
+    "address": ":8080"
+  },
+  "context": {
+    "timeout": 2
+  },
+  "database": {
+    "prod": {
+      "host": "databases-books-online.cl8sopwirx70.us-east-2.rds.amazonaws.com",
+      "port": "3306",
+      "user": "books_online",
+      "pass": "books_online",
+      "name": "books_online"
+    },
+    "dev": {
+      "host": "127.0.0.1",
+      "post": "3306",
+      "user": "Book$online123",
+      "pass": "Book$online123",
+      "name": "books_online"
+    }
+  },
+  "jwt": {
+    "secret": "KambingGUling",
+    "expired": 72
+  }
+}

@@ -1,10 +1,10 @@
-# Rest API Books Online
+# Rest API Book Online
 
 ## About
 
-Books Online adalah sebuah aplikasi semacam perpustakaan online yang dibuat untuk memudahkan para penggemar buku yang ingin membaca buku dari seluruh dunia, mereka dapat meminjam buku di aplikasi, menyewa buku, dan bahkan membeli buku. Books Online juga menyediakan fitur bagi penulis buku yang pemula maupun profesional untuk menerbitkan bukunya. Penulis buku dapat menjual, menyewakan, dan meminjamkan bukunya kepada para pembaca buku. Buku-buku yang tersedia di Books Online terdapat versi gratis, berbayar, dan berlangganan.
+Book Online adalah sebuah aplikasi semacam perpustakaan online yang dibuat untuk memudahkan para penggemar buku yang ingin membaca buku dari seluruh dunia, mereka dapat meminjam buku di aplikasi, menyewa buku, dan bahkan membeli buku. Book Online juga menyediakan fitur bagi penulis buku yang pemula maupun profesional untuk menerbitkan bukunya. Penulis buku dapat menjual, menyewakan, dan meminjamkan bukunya kepada para pembaca buku. Buku-buku yang tersedia di Book Online terdapat versi gratis, berbayar, dan berlangganan.
 
-## MVP
+## Fitur
 
 - Menampilkan Buku-Buku
 - Pencarian Buku-Buku
@@ -14,11 +14,18 @@ Books Online adalah sebuah aplikasi semacam perpustakaan online yang dibuat untu
 - Terdapat buku yang bebas akses oleh user
 - User yang penulis dapat menerbitkan bukunya dalam versi gratis, berbayar, atau untuk penyewaan.
 
+## ERD
+![erd](ERD.png)
+
 ## Contributors
 
 Wahyu Nur Fadillah
 
 ## TODO
 
-[ ] Membuat ERD Rekening User
-[ ] Membuat No Telpon Users
+- [ ] Membuat ERD Rekening User
+- [ ] Membuat No Telpon Users
+
+## NOTES
+
+- Semua users dapat membuat buku, yang seharusnya hanya user dengan role penulis yang dapat membuat buku

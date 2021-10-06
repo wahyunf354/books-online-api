@@ -4,7 +4,181 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5031f2a-be90-4b44-a30c-5d557dee8690" name="Changes" comment="add .idea to .gitignore" />
+    <list default="true" id="a5031f2a-be90-4b44-a30c-5d557dee8690" name="Changes" comment="add .idea to .gitignore">
+      <change afterPath="$PROJECT_DIR$/.github/workflows/test.yml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/books-online-api.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/ERD.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/middlewares/auth.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/routes/route.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/book_details/Domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/book_types/book_types_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/book_types/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/book_types/mocks/Repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/book_types/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/books/books_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/books/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/books/mocks/Localy.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/books/mocks/Repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/books/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/google_books/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/google_books/google_books_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/google_books/mocks/ThirdPartyGoogleBooks.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/google_books/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/image_books/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/orders/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/orders/mocks/OrderDetailRepository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/orders/mocks/Repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/orders/orders_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/orders/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/payment_methods/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/payment_methods/mocks/Repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/payment_methods/payment_methods_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/payment_methods/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/transactions/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/transactions/mocks/Repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/transactions/transactions_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/transactions/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/users/domain.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/users/mocks/Repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/users/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/business/users/users_test.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cli/connect_ec2.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cli/connectrds.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cli/cover.out" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cli/install_docker_ec2.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cli/rundocker.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/cli/testHtml.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/config.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/base_response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/book_types/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/book_types/requests/book_type_create.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/book_types/responses/book_type_create.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/books/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/books/requests/create_books.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/books/requests/get_books.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/books/requests/get_one_book.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/books/responses/create_books/create_books.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/books/responses/get_books/get_books.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/books/responses/get_one_book/get_one_book.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/error_type.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/google_books/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/google_books/requests/google_books_search.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/google_books/responses/google_books_search.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/orders/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/orders/requests/create_order/request.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/orders/responses/create_order/response.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/payment_methods/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/payment_methods/requests/create_payment_methods_requests/requests.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/payment_methods/responses/create_payment_methods_responses/responses.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/transactions/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/transactions/requests/create_transactions.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/transactions/requests/update_status_transaction.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/transactions/responses/create_transaction/create_transactions_responses.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/transactions/responses/update_transaction/update_status_transaction.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/users/http.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/users/requests/user_login.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/users/requests/user_register.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/users/responses/login/user_login.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/controllers/users/responses/register/user_register.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/book_details/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/book_details/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/book_types/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/book_types/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/books/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/books/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/image_books/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/image_books/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/order_details/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/order_details/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/orders/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/orders/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/payment_methods/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/payment_methods/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/transactions/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/transactions/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/users/mysql.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/databases/users/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/localy/book_files/local.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/localy/image_books_files/local.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/mysql/driver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/thirdparts/google_books/google_books.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/drivers/thirdparts/google_books/record.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/check_slice_item.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/hashing.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/is_valid_email.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/helpers/random_string.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/1632912643_CrPUlqPTNF.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/1633059738_vwabuwbxWg.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/1633059764_xO1T3jhJaH.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/1633178024_HuHMvY2V77.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/1633419887_FvuNzOuqGG.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 08:47:12 WIB_oIcLiOa4XX_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 08:55:35 WIB_mzqB9UQrCi_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 08:56:43 WIB_x9TWepHBId_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 09:10:50 WIB_Z9fvIR6qpN_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 09:13:13 WIB_Azb4KzMyMJ_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 09:13:34 WIB_t212t1LWXA_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 09:18:15 WIB_yUk1S6qynU_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 16:16:52 WIB_O7WVqaTB0G_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 16:51:13 WIB_IyWiZuvOZk_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 16:53:36 WIB_jvkLb5wYKz_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Tuesday, 28-Sep-21 16:54:00 WIB_eBlM8xML4R_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Wednesday, 22-Sep-21 11:45:05 WIB_BpLnfgDsc2_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Wednesday, 22-Sep-21 11:50:52 WIB_BpLnfgDsc2_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Wednesday, 29-Sep-21 15:32:06 WIB_9VXDK7Fnrs_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Wednesday, 29-Sep-21 16:31:56 WIB_3TREynLsID_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Wednesday, 29-Sep-21 16:39:58 WIB_Vc7w0yJnft_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Wednesday, 29-Sep-21 16:40:35 WIB_r3Fr5TidJh_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Wednesday, 29-Sep-21 17:38:14 WIB_H4bN7CChsN_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/Wednesday, 29-Sep-21 17:48:30 WIB_DV8anEARzV_Salinan dari LAMPIRAN DOKUMEN KAMPUS MERDEKA-converted.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/�_Q7qS7UN8FS.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1632912643_AW1mAdwHaM.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1632912643_VvxLxpWvLY.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1633059766_jSiz5AzIx9.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1633059766_xx0iqmJUSV.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1633178026_cTBKmctT5h.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1633178026_hzc9wBo5bc.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1633419889_jn527LizTF.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1633419889_uE76pvkZuO.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Tuesday, 28-Sep-21 16:51:13 WIB_ECiHUtLwdJ_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Tuesday, 28-Sep-21 16:51:13 WIB_oKXe59qNp2_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Tuesday, 28-Sep-21 16:53:36 WIB_5APO3yGCNE_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Tuesday, 28-Sep-21 16:53:36 WIB_x1z4uK8nsg_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Tuesday, 28-Sep-21 16:54:00 WIB_4A8W6anqLW_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Tuesday, 28-Sep-21 16:54:00 WIB_cBztH5gmi5_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 22-Sep-21 11:45:05 WIB_5a84jjJkwz_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 22-Sep-21 11:45:05 WIB_WD8F2qNfHK_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 15:32:06 WIB_qJpHhUUHG4_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 15:32:06 WIB_rDH8b5AaVi_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 16:31:56 WIB_CmLt5uGFz5_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 16:31:56 WIB_ckliMwmygU_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 16:40:35 WIB_AsXzrjw6ub_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 16:40:35 WIB_mdT6ObdwvC_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 17:38:14 WIB_MW4yKepvTb_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 17:38:14 WIB_onQMlT9jUv_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 17:48:30 WIB_522dVz1JJI_apa la terserah.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/Wednesday, 29-Sep-21 17:48:30 WIB_9kCy6myUV6_bgzoom.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/�_D4Q2zGbCPN.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/�_OdhauW5UyC.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.env.example" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/configs/db.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/user_controller.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/response/base_response.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/users/user_db.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/models/users/user_register.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/routes/route.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/swagger.yml" beforeDir="false" afterPath="$PROJECT_DIR$/swagger.yml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -144,6 +318,22 @@
       <directory value="$PROJECT_DIR$" />
       <filePath value="$PROJECT_DIR$" />
       <framework value="gotest" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="SwaggerCodegen">
+      <option name="activeConfigurationType" value="FILE" />
+      <option name="configurationPath" value="" />
+      <option name="customJreEnabled" value="false" />
+      <option name="customTemplatesPath" value="" />
+      <option name="enableDebugLogging" value="false" />
+      <option name="generateToPath" value="$PROJECT_DIR$/gen" />
+      <option name="generationParameters">
+        <list />
+      </option>
+      <option name="generatorPath" value="https://repo1.maven.org/maven2/org/openapitools/openapi-generator-cli/5.0.0/openapi-generator-cli-5.0.0.jar" />
+      <option name="jdkPath" value="" />
+      <option name="language" value="java" />
+      <option name="specificationPath" value="$PROJECT_DIR$/swagger.yml" />
       <method v="2" />
     </configuration>
     <recent_temporary>

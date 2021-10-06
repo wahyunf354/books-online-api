@@ -1,9 +1,9 @@
 openapi: 3.0.0
 servers:
   - description: Develompent
-    url: http://localhost:8000
+    url: http://localhost:8000/api/
   - description: Production
-    url: https://
+    url: http://3.133.85.122:8080/api/
 info:
   description: 
     Rest API Books Online sebuah aplikasi yang<br>
@@ -20,7 +20,8 @@ tags:
     description: Endpoint untuk manipulasi data users
   - name: Books
     description: Enpoint untuk manipulasi data buku
-
+  - name: Orders
+    description: Enpoint to add order
 paths:
   /v1/books:
     get:
@@ -61,7 +62,7 @@ paths:
             maximum: 10
       responses:
         '200':
-          description: search results matching criteria or data books
+          description: search results matching criteria or data book_types
           content:
             application/json:
               schema:
@@ -90,24 +91,30 @@ paths:
                 - description
                 - page_count
                 - image
-              properties:
+              properties: 
                 title: 
                   type: string
+                  example: "JavaScript 100 Jam"
                 book_type_id: 
                   type: integer
+                  example: 1
                 category_id:
+                  type: string
+                  example: 2
+                price: 
                   type: integer
-                price:
+                  example: 20000
+                user_id: 
                   type: integer
-                user_id:
-                  type: integer
+                  example: 1
                 description: 
                   type: string
+                  example: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                image: 
+                  type: object
                 page_count: 
                   type: integer
-                image:
-                  type: string
-                  format: binary
+                  example: 190
       responses:
         '201':
           description: response success membuat buku baru
@@ -119,6 +126,7 @@ paths:
           description: terjadi masalah ketika data kosong atau data yang diinputkan bermasalah 
         '500':
           description: respon ketika terjadi masalah di server
+
   /v1/books/:id:
     get: 
       tags: 
@@ -322,7 +330,26 @@ paths:
           description: respon ketika request yang diberikan bermasalah
         '500':
           description: respon ketika terjadi masalah di server
-git
+  /v1/orders:
+    post:
+      tags:
+        - Orders
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                book_id:
+                  type: integer
+                  example: 4
+                qty:
+                  type: integer
+                  example: 1
+      responses:
+        201:
+          description: success create order
+
 components:
   schemas:
     LoginResponse: 
