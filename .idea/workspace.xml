@@ -6,6 +6,9 @@
   <component name="ChangeListManager">
 <<<<<<< HEAD
     <list default="true" id="a5031f2a-be90-4b44-a30c-5d557dee8690" name="Changes" comment="add .idea to .gitignore">
+      <change afterPath="$PROJECT_DIR$/public/files/file_books/1633511888_qzzB82YaZF.pdf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1633511890_TUjhWDo2hu.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/public/img/img_books/1633511890_gDFnDN5kB9.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
 =======
@@ -75,10 +78,14 @@
     </key>
   </component>
 <<<<<<< HEAD
+  <component name="RunManager" selected="Go Test.TestPaymentMethodUsecase_CreatePaymentMethod/Test_Case_2_|_Name_empty in books_online_api/business/payment_methods">
+=======
+<<<<<<< HEAD
   <component name="RunManager" selected="Swagger Codegen.swagger.yml">
 =======
   <component name="RunManager" selected="Go Test.TestPaymentMethodUsecase_CreatePaymentMethod/Test_Case_2_|_Name_empty in books_online_api/business/payment_methods">
 >>>>>>> googleBooksTest
+>>>>>>> development
     <configuration name="TestPaymentMethodUsecase_CreatePaymentMethod/Test_Case_2_|_Name_empty in books_online_api/business/payment_methods" type="GoTestRunConfiguration" factoryName="Go Test" temporary="true" nameIsGenerated="true">
       <module name="books-online-api" />
       <working_directory value="$PROJECT_DIR$/business/payment_methods" />

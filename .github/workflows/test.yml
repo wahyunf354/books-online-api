@@ -4,31 +4,16 @@ on:
     branches:
       - 'master'
       - 'ci'
+      - 'cicd'
   pull_request:
     branches:
       - 'master'
 
 jobs:
-#  job 1: create config
-  create-config:
-    name: do create config file
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: run echo
-        env:
-          CONFIG: ${{ secrets.CONFIG }}
-        run: |
-          echo "$CONFIG" > ./config.json
-          chmod 777 ./config.json
-          pwd
-          ls
-
 #  job 2: unit test
   unit-test:
     name: do unit test to project go
     runs-on: ubuntu-latest
-    needs: create-config
     steps:
     - name: setup github action (CI)
       uses: actions/checkout@v2
@@ -46,6 +31,13 @@ jobs:
     needs: unit-test
     steps:
       - uses: actions/checkout@v2
+      - name: create config
+        env:
+          CONFIG: ${{ secrets.CONFIG }}
+        run: |
+          touch config.json
+          echo "$CONFIG" > config.json
+          chmod 777 config.json
       - name: build docker
         run: docker build -t wahyunf354/books_online:1.0.0 .
       - name: login registry docker hub
@@ -80,5 +72,5 @@ jobs:
             StrictHostKeyChecking=no
           END
       - name: Connect EC2 & Remove All Container & Pull from Registry & Start
-        run: ssh development 'docker rm -f $(docker ps -a -q) && docker pull wahyunf354/books_online:1.0.0 && docker run -d -p 8080:8080 --name=books_online wahyunf354/books_online:1.0.0'
+        run: ssh development 'docker rm -f $(docker ps -a -q) || true && docker pull wahyunf354/books_online:1.0.0 && docker run -d -p 8080:8080 --name=books_online wahyunf354/books_online:1.0.0'
 
