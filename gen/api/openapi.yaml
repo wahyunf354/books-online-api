@@ -1,0 +1,975 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: wahyunurfadillah313@gmail.com
+  description: Rest API Books Online sebuah aplikasi yang<br> dapat meminjami kita
+    buku dan kita juga bisa beli buku
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Books Online
+  version: 1.0.0
+servers:
+- description: Develompent
+  url: http://localhost:8000/api/
+- description: Production
+  url: http://3.133.85.122:8080/api/
+tags:
+- description: Endpoint untuk manipulasi data users
+  name: Users
+- description: Enpoint untuk manipulasi data buku
+  name: Books
+- description: Enpoint to add order
+  name: Orders
+paths:
+  /v1/books:
+    get:
+      description: |
+        Koleksi buku yang diambil dapat berasal dari pihak ketiga,
+        atau berasal dari penulis.
+      operationId: collectionBooks
+      parameters:
+      - description: mengambil data sesuai kategori
+        explode: true
+        in: query
+        name: category
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Mencari buku dengan mamasukan string nama bukunya atau nama penulis
+        explode: true
+        in: query
+        name: searchString
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: number of records to skip for pagination
+        explode: true
+        in: query
+        name: skip
+        required: false
+        schema:
+          format: int32
+          minimum: 0
+          type: integer
+        style: form
+      - description: maximum number of records to return
+        explode: true
+        in: query
+        name: limit
+        required: false
+        schema:
+          format: int32
+          maximum: 10
+          minimum: 0
+          type: integer
+        style: form
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BooksResponse'
+          description: search results matching criteria or data book_types
+        "400":
+          description: bad input parameter
+        "500":
+          description: respon ketika terjadi masalah di server
+      summary: mengambil semua koleksi buku
+      tags:
+      - Books
+      x-accepts: application/json
+    post:
+      description: Membuat buku baru hanya dapat dilakukan oleh user yang mendaftar
+        sebagai penulis
+      operationId: createBook
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object'
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                title:
+                  example: JavaScript 100 Jam
+                  type: string
+                book_type_id:
+                  example: 1
+                  type: integer
+                category_id:
+                  example: "2"
+                  type: string
+                price:
+                  example: 20000
+                  type: integer
+                user_id:
+                  example: 1
+                  type: integer
+                description:
+                  example: Lorem Ipsum is simply dummy text of the printing and typesetting
+                    industry. Lorem Ipsum has been the industry's standard dummy text
+                    ever since the 1500s, when an unknown printer took a galley of
+                    type and scrambled it to make a type specimen book. It has survived
+                    not only five centuries, but also the leap into electronic typesetting,
+                    remaining essentially unchanged. It was popularised in the 1960s
+                    with the release of Letraset sheets containing Lorem Ipsum passages,
+                    and more recently with desktop publishing software like Aldus
+                    PageMaker including versions of Lorem Ipsum.
+                  type: string
+                image:
+                  type: object
+                page_count:
+                  example: 190
+                  type: integer
+              required:
+              - book_type_id
+              - category_id
+              - description
+              - image
+              - page_count
+              - price
+              - title
+              - user_id
+              type: object
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateBookResponse'
+          description: response success membuat buku baru
+        "400":
+          description: terjadi masalah ketika data kosong atau data yang diinputkan
+            bermasalah
+        "500":
+          description: respon ketika terjadi masalah di server
+      summary: Membuat buku baru dari user penulis
+      tags:
+      - Books
+      x-contentType: multipart/form-data
+      x-accepts: application/json
+  /v1/books/:id:
+    get:
+      operationId: getOneBook
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BookDetailResponse'
+          description: Mengembalikan satu buku sesuai id dengan description dan url
+            buku
+      summary: Mengambil satu buku dengan detail
+      tags:
+      - Books
+      x-accepts: application/json
+  /v1/booktypes:
+    post:
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_1'
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  example: beli
+                  type: string
+                unit:
+                  example: selamanya
+                  type: string
+              type: object
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201'
+          description: Berhasil memasukkan data tipe buku
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_400'
+          description: Respon jika terjadi masalah pada request
+        "500":
+          description: Respon jika terjadi masalah pada server internal
+      summary: Membuat tipe buku
+      tags:
+      - Books
+      x-contentType: application/json
+      x-accepts: application/json
+  /v1/categories:
+    post:
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_2'
+        content:
+          application/json:
+            schema:
+              properties:
+                title:
+                  type: string
+              required:
+              - title
+              type: object
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_1'
+          description: Berhasil membuat data kategori buku
+        "400":
+          description: Respon ketika nama kategori kosong atau request yang dikirimkan
+            bermasalah
+        "500":
+          description: Server bermasalah
+      tags:
+      - Books
+      x-contentType: application/json
+      x-accepts: application/json
+  /v1/users/register:
+    post:
+      description: Endpoint ini digunakan untuk mendaftarkan user baru sebagai user
+        pembaca atau penulis
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_201_2'
+          description: Berhasil membuat user baru
+      summary: Endpoint untuk membuat user baru atau register
+      tags:
+      - Users
+      x-contentType: application/json
+      x-accepts: application/json
+  /v1/users/login:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+          description: Untuk melakukan login users
+      summary: Endpoint untuk melakukan login users
+      tags:
+      - Users
+      x-contentType: application/json
+      x-accepts: application/json
+  /v1/users/:id:
+    get:
+      description: Untuk mendapatkan data detail user maka harus memberi authentication
+        di header dengan token
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetailResponse'
+          description: Mengambalikan response body berupa data users secara lengkap
+      summary: Mendapatkan data detail user
+      tags:
+      - Users
+      x-accepts: application/json
+  /v1/users/profile:
+    post:
+      description: untuk melakukan upload harus mencantumkan header authentication
+        dengan token
+      operationId: uplaodProfileId
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_3'
+        content:
+          multipart/form-data:
+            schema:
+              properties:
+                userId:
+                  example: 1
+                  type: integer
+                image:
+                  format: binary
+                  type: string
+              type: object
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfileResponse'
+          description: response berhasil mengupload profile
+        "400":
+          description: respon ketika request yang diberikan bermasalah
+        "500":
+          description: respon ketika terjadi masalah di server
+      summary: untuk upload profile user
+      tags:
+      - Users
+      x-contentType: multipart/form-data
+      x-accepts: application/json
+  /v1/orders:
+    post:
+      requestBody:
+        $ref: '#/components/requestBodies/inline_object_4'
+        content:
+          application/json:
+            schema:
+              properties:
+                book_id:
+                  example: 4
+                  type: integer
+                qty:
+                  example: 1
+                  type: integer
+              type: object
+      responses:
+        "201":
+          description: success create order
+      tags:
+      - Orders
+      x-contentType: application/json
+      x-accepts: application/json
+components:
+  requestBodies:
+    inline_object_1:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_1'
+    inline_object:
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/inline_object'
+    inline_object_4:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_4'
+    inline_object_3:
+      content:
+        multipart/form-data:
+          schema:
+            $ref: '#/components/schemas/inline_object_3'
+    inline_object_2:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object_2'
+  schemas:
+    LoginResponse:
+      example:
+        code: 200
+        data:
+          firstname: Wahyu
+          id: 1
+          email: wahyunurfadillah313@gmail.com
+          token: 4yufdv2uig4u1-h4ufsdivb2ry8gfwuibv1r
+          lastname: Nur Fadillah
+          username: wahyunf
+        message: success
+      properties:
+        code:
+          example: 200
+          type: integer
+        message:
+          example: success
+          type: string
+        data:
+          $ref: '#/components/schemas/LoginResponse_data'
+      required:
+      - code
+      - data
+      - message
+      type: object
+    LoginRequest:
+      example:
+        password: "1234567"
+        email: wahyunurfadillah@gmail.com
+      properties:
+        email:
+          example: wahyunurfadillah@gmail.com
+          type: string
+        password:
+          example: "1234567"
+          type: string
+      type: object
+    UserDetailResponse:
+      example:
+        code: 200
+        data:
+          firstname: firstname
+          role: penulis
+          gender: L
+          birth: 2000-01-23T04:56:07.000+00:00
+          email: email
+          url_profile: https://localhost:80000/image/user/1
+          username: username
+          lastname: lastname
+        message: success
+      properties:
+        code:
+          example: 200
+          type: integer
+        message:
+          example: success
+          type: string
+        data:
+          $ref: '#/components/schemas/UserDetailResponse_data'
+      type: object
+    RegisterResponse:
+      example:
+        firstname: firstname
+        role: 0
+        gender: L
+        birth: 2000-01-23T04:56:07.000+00:00
+        email: email
+        username: username
+        lastname: lastname
+      properties:
+        username:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        role:
+          type: integer
+        birth:
+          format: date-time
+          type: string
+        gender:
+          example: L
+          type: string
+      required:
+      - birth
+      - email
+      - firstname
+      - gender
+      - lastname
+      - role
+      - username
+      type: object
+    RegisterRequest:
+      example:
+        firstname: firstname
+        password: "123"
+        role: 0
+        gender: L
+        confpassword: "123"
+        birth: 2000-01-23T04:56:07.000+00:00
+        email: email
+        username: username
+        lastname: lastname
+      properties:
+        username:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        role:
+          type: integer
+        birth:
+          format: date-time
+          type: string
+        gender:
+          example: L
+          type: string
+        password:
+          example: "123"
+          type: string
+        confpassword:
+          example: "123"
+          type: string
+      required:
+      - birth
+      - confpassword
+      - email
+      - firstname
+      - gender
+      - lastname
+      - password
+      - role
+      - username
+      type: object
+    UserProfileResponse:
+      example:
+        code: 201
+        data:
+          user_id: "1"
+          url_profile: https://localhost:80000/image/user/1
+        message: success
+      properties:
+        code:
+          example: 201
+          type: integer
+        message:
+          example: success
+          type: string
+        data:
+          $ref: '#/components/schemas/UserProfileResponse_data'
+      type: object
+    BooksResponse:
+      example:
+        code: 200
+        data:
+        - price: 200000
+          id: 1
+          title: Javascript 100jam
+          category: Programming
+          type: Free
+          autor: Handoko
+        - price: 200000
+          id: 1
+          title: Javascript 100jam
+          category: Programming
+          type: Free
+          autor: Handoko
+        message: Success
+      properties:
+        code:
+          example: 200
+          type: integer
+        message:
+          example: Success
+          type: string
+        data:
+          items:
+            $ref: '#/components/schemas/BookItems'
+          type: array
+      required:
+      - code
+      - data
+      - message
+      type: object
+    BookItems:
+      example:
+        price: 200000
+        id: 1
+        title: Javascript 100jam
+        category: Programming
+        type: Free
+        autor: Handoko
+      properties:
+        id:
+          example: 1
+          format: id
+          type: integer
+        title:
+          example: Javascript 100jam
+          type: string
+        autor:
+          example: Handoko
+          type: string
+        category:
+          example: Programming
+          type: string
+        type:
+          example: Free
+          type: string
+        price:
+          example: 200000
+          type: integer
+      required:
+      - autor
+      - category
+      - id
+      - price
+      - title
+      - type
+      type: object
+    BookDetailResponse:
+      example:
+        code: 200
+        data:
+          price: 200000
+          description: Mengambil satu buku dengan detail
+          id: 1
+          title: Javascript 100jam
+          category: Programming
+          type: Free
+          autor: Handoko
+          url: https://localhost:80000/image/book/1
+        message: Success
+      properties:
+        code:
+          example: 200
+          type: integer
+        message:
+          example: Success
+          type: string
+        data:
+          $ref: '#/components/schemas/BookDetail'
+      required:
+      - code
+      - data
+      - message
+      type: object
+    BookDetail:
+      example:
+        price: 200000
+        description: Mengambil satu buku dengan detail
+        id: 1
+        title: Javascript 100jam
+        category: Programming
+        type: Free
+        autor: Handoko
+        url: https://localhost:80000/image/book/1
+      properties:
+        id:
+          example: 1
+          format: id
+          type: integer
+        title:
+          example: Javascript 100jam
+          type: string
+        autor:
+          example: Handoko
+          type: string
+        category:
+          example: Programming
+          type: string
+        type:
+          example: Free
+          type: string
+        price:
+          example: 200000
+          type: integer
+        description:
+          example: Mengambil satu buku dengan detail
+          type: string
+        url:
+          example: https://localhost:80000/image/book/1
+          type: string
+      required:
+      - autor
+      - category
+      - description
+      - id
+      - price
+      - title
+      - type
+      - url
+      type: object
+    CreateBookResponse:
+      example:
+        code: 201
+        data:
+          category_id: category_id
+          user_id: user_id
+          price: price
+          book_type_id: book_type_id
+          description: description
+          imageBooks:
+          - imageBooks
+          - imageBooks
+          title: title
+          page_count: page_count
+        message: success
+      properties:
+        code:
+          example: 201
+          type: integer
+        message:
+          example: success
+          type: string
+        data:
+          $ref: '#/components/schemas/CreateBookResponse_data'
+      type: object
+    inline_object:
+      properties:
+        title:
+          example: JavaScript 100 Jam
+          type: string
+        book_type_id:
+          example: 1
+          type: integer
+        category_id:
+          example: "2"
+          type: string
+        price:
+          example: 20000
+          type: integer
+        user_id:
+          example: 1
+          type: integer
+        description:
+          example: Lorem Ipsum is simply dummy text of the printing and typesetting
+            industry. Lorem Ipsum has been the industry's standard dummy text ever
+            since the 1500s, when an unknown printer took a galley of type and scrambled
+            it to make a type specimen book. It has survived not only five centuries,
+            but also the leap into electronic typesetting, remaining essentially unchanged.
+            It was popularised in the 1960s with the release of Letraset sheets containing
+            Lorem Ipsum passages, and more recently with desktop publishing software
+            like Aldus PageMaker including versions of Lorem Ipsum.
+          type: string
+        image:
+          type: object
+        page_count:
+          example: 190
+          type: integer
+      required:
+      - book_type_id
+      - category_id
+      - description
+      - image
+      - page_count
+      - price
+      - title
+      - user_id
+      type: object
+    inline_object_1:
+      properties:
+        name:
+          example: beli
+          type: string
+        unit:
+          example: selamanya
+          type: string
+      type: object
+    inline_response_201_data:
+      example:
+        unit: unit
+        updated_at: 2000-01-23T04:56:07.000+00:00
+        name: name
+        created_at: 2000-01-23T04:56:07.000+00:00
+        id: 0
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        unit:
+          type: string
+        created_at:
+          format: date-time
+          type: string
+        updated_at:
+          format: date-time
+          type: string
+      type: object
+    inline_response_201:
+      example:
+        code: 201
+        data:
+          unit: unit
+          updated_at: 2000-01-23T04:56:07.000+00:00
+          name: name
+          created_at: 2000-01-23T04:56:07.000+00:00
+          id: 0
+        message: Success create new type book
+      properties:
+        code:
+          example: 201
+          type: integer
+        message:
+          example: Success create new type book
+          type: string
+        data:
+          $ref: '#/components/schemas/inline_response_201_data'
+      type: object
+    inline_response_400:
+      properties:
+        code:
+          example: 400
+          type: integer
+        message:
+          example: Terjadi masalah ketika request
+          type: string
+      type: object
+    inline_object_2:
+      properties:
+        title:
+          type: string
+      required:
+      - title
+      type: object
+    inline_response_201_1_data:
+      example:
+        title: title
+      properties:
+        title:
+          type: string
+      type: object
+    inline_response_201_1:
+      example:
+        code: 0
+        data:
+          title: title
+        message: message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+        data:
+          $ref: '#/components/schemas/inline_response_201_1_data'
+      type: object
+    inline_response_201_2:
+      example:
+        code: 201
+        data:
+          firstname: firstname
+          role: 0
+          gender: L
+          birth: 2000-01-23T04:56:07.000+00:00
+          email: email
+          username: username
+          lastname: lastname
+        message: Success
+      properties:
+        code:
+          example: 201
+          type: integer
+        message:
+          example: Success
+          type: string
+        data:
+          $ref: '#/components/schemas/RegisterResponse'
+      required:
+      - code
+      - data
+      - message
+      type: object
+    inline_object_3:
+      properties:
+        userId:
+          example: 1
+          type: integer
+        image:
+          format: binary
+          type: string
+      type: object
+    inline_object_4:
+      properties:
+        book_id:
+          example: 4
+          type: integer
+        qty:
+          example: 1
+          type: integer
+      type: object
+    LoginResponse_data:
+      example:
+        firstname: Wahyu
+        id: 1
+        email: wahyunurfadillah313@gmail.com
+        token: 4yufdv2uig4u1-h4ufsdivb2ry8gfwuibv1r
+        lastname: Nur Fadillah
+        username: wahyunf
+      properties:
+        id:
+          example: 1
+          type: integer
+        token:
+          example: 4yufdv2uig4u1-h4ufsdivb2ry8gfwuibv1r
+          format: token
+          type: string
+        firstname:
+          example: Wahyu
+          type: string
+        lastname:
+          example: Nur Fadillah
+          type: string
+        email:
+          example: wahyunurfadillah313@gmail.com
+          type: string
+        username:
+          example: wahyunf
+          type: string
+      type: object
+    UserDetailResponse_data:
+      example:
+        firstname: firstname
+        role: penulis
+        gender: L
+        birth: 2000-01-23T04:56:07.000+00:00
+        email: email
+        url_profile: https://localhost:80000/image/user/1
+        username: username
+        lastname: lastname
+      properties:
+        username:
+          type: string
+        firstname:
+          type: string
+        lastname:
+          type: string
+        email:
+          type: string
+        birth:
+          format: date-time
+          type: string
+        gender:
+          example: L
+          type: string
+        url_profile:
+          example: https://localhost:80000/image/user/1
+          format: url
+          type: string
+        role:
+          example: penulis
+          type: string
+      type: object
+    UserProfileResponse_data:
+      example:
+        user_id: "1"
+        url_profile: https://localhost:80000/image/user/1
+      properties:
+        url_profile:
+          example: https://localhost:80000/image/user/1
+          type: string
+        user_id:
+          example: "1"
+          type: string
+      type: object
+    CreateBookResponse_data:
+      example:
+        category_id: category_id
+        user_id: user_id
+        price: price
+        book_type_id: book_type_id
+        description: description
+        imageBooks:
+        - imageBooks
+        - imageBooks
+        title: title
+        page_count: page_count
+      properties:
+        title:
+          type: string
+        book_type_id:
+          type: string
+        category_id:
+          type: string
+        price:
+          type: string
+        user_id:
+          type: string
+        description:
+          type: string
+        page_count:
+          type: string
+        imageBooks:
+          items:
+            type: string
+          type: array
+      type: object
+
