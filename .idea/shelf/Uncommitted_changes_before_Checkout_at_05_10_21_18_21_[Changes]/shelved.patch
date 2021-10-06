@@ -1,0 +1,56 @@
+Index: .github/workflows/test.yml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>name: unit test golang\non:\n  push:\n    branches:\n      - 'master'\n      - 'ci'\n      - 'booksTest'\n  pull_request:\n    branches:\n      - 'master'\n\njobs:\n  #  job 1: unit test\n  unit-test:\n    name: do unit test to project go\n    runs-on: ubuntu-latest\n    steps:\n    - name: setup github action (CI)\n      uses: actions/checkout@v2\n    - name: setup golang\n      uses: actions/setup-go@v2\n      with:\n        go-version: 1.17\n    - name: running unit test\n      run: go test ./... -cover\n\n# job 2: build push docker\n  build-push-docker:\n    name: \"Build image and push register\"\n    runs-on: ubuntu-latest\n    needs: unit-test\n    steps:\n      - uses: actions/checkout@v2\n      - name: build docker\n        run: docker build -t wahyunf354/books_online:1.0.0 .\n      - name: login registry docker hub\n        uses: docker/login-action@v1\n        with:\n          username: ${{ secrets.DOCKER_HUB_USERNAME }}\n          password: ${{ secrets.DOCKER_HUB_TOKEN }}\n      - name: push docker hub\n        run: docker push wahyunf354/books_online:1.0.0\n\n  deployment-ec2:\n    name: \"Deploy to ec2 from registry docker hub\"\n    runs-on: ubuntu-latest\n    needs: build-push-docker\n    steps:\n      - uses: actions/checkout@v2\n      - name: configuration SSH\n        env:\n          SSH_USER: ${{ secrets.SSH_USER }}\n          SSH_KEY: ${{ secrets.SSH_KEY }}\n          SSH_HOST: ${{ secrets.SSH_HOST }}\n        run: |\n          mkdir -p ~/.ssh/\n          echo \"$SSH_KEY\" > ~/.ssh/books_online.pem\n          chmod 400 ~/.ssh/books_online.pem\n          cat >>~/.ssh/config <<END\n          Host development\n            HostName $SSH_HOST\n            User $SSH_USER\n            IdentityFile ~/.ssh/books_online.pem\n            StrictHostKeyChecking=no\n          END\n      - name: Connect EC2 & Remove All Container & Pull from Registry & Start\n        run: ssh development 'docker rm -f $(docker ps -a -q) && docker pull wahyunf354/books_online:1.0.0 && docker run -d -p 8080:8080 --name=books_online wahyunf354/books_online:1.0.0'\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.github/workflows/test.yml b/.github/workflows/test.yml
+--- a/.github/workflows/test.yml	(revision c47bb0d2dfd0c1c7725b243ed42fe2dd1c35af2a)
++++ b/.github/workflows/test.yml	(date 1633432879308)
+@@ -4,7 +4,6 @@
+     branches:
+       - 'master'
+       - 'ci'
+-      - 'booksTest'
+   pull_request:
+     branches:
+       - 'master'
+Index: Dockerfile
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>#stage 1\nFROM golang:1.16-alpine AS builder\nRUN mkdir /app\nADD . /app\n\nWORKDIR /app\nRUN go clean --modcache\nRUN go build -o main\n\n#stage 2\nFROM alpine:3.14\nWORKDIR /root/\n\n#ENV SERVER_ADDRESS $GITHUB_SERVER_ADDRESS\n#ENV HOST_DATABASE $GITHUB_HOST_DATABASE\n#ENV PORT_DATABASE $GITHUB_PORT_DATABASE\n#ENV USER_DATABASE $GITHUB_USER_DATABASE\n#ENV PASSWORD_DATABASE $GITHUB_PASSWORD_DATABASE\n#ENV JWT_SECRET $GITHUB_JWT_SECRET\nENV CONFIG ${{ secrets.CONFIG }}\n\nRUN echo '$CONFIG' > ./config.json\n\n#COPY --from=builder /app/ex.config.json .\nCOPY --from=builder /app/main .\nEXPOSE 8080\n\nCMD [\"./main\"]\n\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/Dockerfile b/Dockerfile
+--- a/Dockerfile	(revision c47bb0d2dfd0c1c7725b243ed42fe2dd1c35af2a)
++++ b/Dockerfile	(date 1633432879320)
+@@ -4,6 +4,7 @@
+ ADD . /app
+ 
+ WORKDIR /app
++
+ RUN go clean --modcache
+ RUN go build -o main
+ 
+@@ -11,17 +12,8 @@
+ FROM alpine:3.14
+ WORKDIR /root/
+ 
+-#ENV SERVER_ADDRESS $GITHUB_SERVER_ADDRESS
+-#ENV HOST_DATABASE $GITHUB_HOST_DATABASE
+-#ENV PORT_DATABASE $GITHUB_PORT_DATABASE
+-#ENV USER_DATABASE $GITHUB_USER_DATABASE
+-#ENV PASSWORD_DATABASE $GITHUB_PASSWORD_DATABASE
+-#ENV JWT_SECRET $GITHUB_JWT_SECRET
+-ENV CONFIG ${{ secrets.CONFIG }}
+-
+-RUN echo '$CONFIG' > ./config.json
+-
+-#COPY --from=builder /app/ex.config.json .
++RUN
++COPY --from=builder /app/config.json .
+ COPY --from=builder /app/main .
+ EXPOSE 8080
+ 

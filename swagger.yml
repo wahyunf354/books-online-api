@@ -322,7 +322,7 @@ paths:
           description: respon ketika request yang diberikan bermasalah
         '500':
           description: respon ketika terjadi masalah di server
-
+git
 components:
   schemas:
     LoginResponse: 
