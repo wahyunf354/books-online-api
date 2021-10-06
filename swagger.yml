@@ -21,7 +21,10 @@ tags:
   - name: Books
     description: Enpoint untuk manipulasi data buku
   - name: Orders
-    description: Enpoint to add order
+    description: Enpoint untuk manifulasi data order
+  - name: Payment Method
+    description: Enpoint untuk manifulasi data Payment Method
+  - name: Transactions
 paths:
   /v1/books:
     get:
@@ -126,7 +129,6 @@ paths:
           description: terjadi masalah ketika data kosong atau data yang diinputkan bermasalah 
         '500':
           description: respon ketika terjadi masalah di server
-
   /v1/books/:id:
     get: 
       tags: 
@@ -349,7 +351,52 @@ paths:
       responses:
         201:
           description: success create order
-
+  /v1/payment_method:
+    post:
+      tags:
+        - Payment Method
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                fee:
+                  type: integer
+                author:
+                  type: string
+                address:
+                  type: string
+      responses:
+        200: 
+          description: success create payment method
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  meta:
+                    type: object
+                    properties:
+                      status: 
+                        type: integer
+                      message:
+                        type: string
+                  data:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      fee: 
+                        type: integer
+                      address:
+                        type: string
+                      author: 
+                        type: string
+        500: 
+          description: error internal server           
 components:
   schemas:
     LoginResponse: 
