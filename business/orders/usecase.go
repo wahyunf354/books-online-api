@@ -26,6 +26,14 @@ func (o OrderUsecase) CreateOrder(ctx context.Context, domain Domain) (Domain, e
 		return Domain{}, controllers.FORBIDDEN_USER
 	}
 
+	if domain.BookId == 0 {
+		return Domain{}, controllers.EMPTY_BOOK_ID
+	}
+
+	if domain.Qty == 0 {
+		return Domain{}, controllers.EMPTY_QTY
+	}
+
 	resultOrder, err := o.Repo.CheckOrderPending(ctx, domain)
 
 	if err != nil {
