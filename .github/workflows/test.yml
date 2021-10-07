@@ -1,4 +1,4 @@
-name: unit test golang
+name: CI CD
 on:
   push:
     branches:
@@ -10,7 +10,7 @@ on:
       - 'master'
 
 jobs:
-#  job 2: unit test
+#  job 1: unit test
   unit-test:
     name: do unit test to project go
     runs-on: ubuntu-latest
@@ -24,7 +24,7 @@ jobs:
     - name: running unit test
       run: go test ./... -cover
 
-# job 3: build push docker
+# job 2: build push docker
   build-push-docker:
     name: "Build image and push register"
     runs-on: ubuntu-latest
@@ -48,7 +48,7 @@ jobs:
       - name: push docker hub
         run: docker push wahyunf354/books_online:1.0.0
 
-# job 4: deploy to ec2
+# job 3: deploy to ec2
   deployment-ec2:
     name: "Deploy to ec2 from registry docker hub"
     runs-on: ubuntu-latest

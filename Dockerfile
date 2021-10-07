@@ -14,8 +14,6 @@ WORKDIR /root/
 
 
 COPY --from=builder /app/config.json .
-
-
 COPY --from=builder /app/main .
 EXPOSE 8080
 
