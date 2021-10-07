@@ -1,4 +1,10 @@
 mode: set
+books_online_api/business/google_books/usecase.go:14.102,19.2 1 1
+books_online_api/business/google_books/usecase.go:21.130,22.19 1 1
+books_online_api/business/google_books/usecase.go:26.2,26.20 1 1
+books_online_api/business/google_books/usecase.go:30.2,32.24 2 1
+books_online_api/business/google_books/usecase.go:22.19,24.3 1 1
+books_online_api/business/google_books/usecase.go:26.20,28.3 1 1
 books_online_api/business/book_types/usecase.go:14.70,19.2 1 1
 books_online_api/business/book_types/usecase.go:21.98,22.25 1 1
 books_online_api/business/book_types/usecase.go:26.2,26.25 1 1
@@ -25,12 +31,6 @@ books_online_api/business/books/usecase.go:72.2,72.24 1 1
 books_online_api/business/books/usecase.go:58.24,60.3 1 1
 books_online_api/business/books/usecase.go:62.30,64.3 1 1
 books_online_api/business/books/usecase.go:68.16,70.3 1 0
-books_online_api/business/google_books/usecase.go:14.102,19.2 1 1
-books_online_api/business/google_books/usecase.go:21.130,22.19 1 1
-books_online_api/business/google_books/usecase.go:26.2,26.20 1 1
-books_online_api/business/google_books/usecase.go:30.2,32.24 2 1
-books_online_api/business/google_books/usecase.go:22.19,24.3 1 1
-books_online_api/business/google_books/usecase.go:26.20,28.3 1 1
 books_online_api/business/orders/usecase.go:15.111,21.2 1 1
 books_online_api/business/orders/usecase.go:23.87,25.23 1 1
 books_online_api/business/orders/usecase.go:29.2,29.24 1 1
